@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light dark">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ملخصات الميد · محارب</title>
+<style>
+:root{--bg:#EEF2F0;--bar:#143C30;--ink:#1C2B27;--muted:#5E6F69;--gold:#B5770F;--line:#DFE7E3;--card:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#0D1411;--bar:#17473A;--ink:#E6EEEA;--muted:#9FB2AB;--gold:#C98A1E;--line:#2B3B36;--card:#131C19}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans Arabic","IBM Plex Sans",Tahoma,"Segoe UI",sans-serif;font-size:15px}
+a{color:inherit;text-decoration:none}
+.bar{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:10px;background:var(--bar);color:#fff;padding:9px 12px}
+.bar a{flex:none;border-radius:8px;padding:5px 12px;font-weight:600;font-size:.86rem;white-space:nowrap}
+.bar .back{background:rgba(255,255,255,.14)}
+.bar .dl{background:var(--gold)}
+.bar .t{flex:1;min-width:0;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;direction:ltr;text-align:center;font-size:.92rem}
+.bar .pg{flex:none;font-family:ui-monospace,Consolas,monospace;font-size:.76rem;opacity:.85;direction:ltr}
+:focus-visible{outline:3px solid #F2C56B;outline-offset:2px}
+#pages{max-width:900px;margin-inline:auto;padding:12px 8px 40px}
+.page{position:relative;margin:0 auto 12px;background:#fff;border-radius:4px;box-shadow:0 1px 6px rgba(0,0,0,.18);overflow:hidden}
+.page canvas{display:block;width:100%;height:100%}
+#msg{max-width:560px;margin:60px auto;padding:0 18px;text-align:center;color:var(--muted);line-height:1.9}
+#msg:empty{display:none}
+#msg a{display:inline-block;margin-top:14px;background:var(--gold);color:#fff;border-radius:8px;padding:7px 20px;font-weight:600}
+</style>
+</head>
+<body>
+<div class="bar"><a class="back" id="back" href="index.html"></a><span class="t" id="title"></span><span class="pg" id="pg"></span><a class="dl" id="dl" href="#" target="_blank" rel="noopener"></a></div>
+<div id="msg"></div>
+<div id="pages" dir="ltr"></div>
+<script src="vendor/pdf.min.js"></script>
+<script>
+(function(){
+  var L = "ar";
+  try { var s = localStorage.getItem("lang"); if (s === "en" || s === "ar") L = s; } catch (e) {}
+  var T = { ar:{back:"رجوع →", dl:"الملف الأصلي", load:"جاري فتح الملف…", err:"ما قدرنا نعرض الملف هنا.", open:"افتح الملف مباشرة", bad:"الرابط غير صحيح.", home:"الصفحة الرئيسية"},
+            en:{back:"← Back", dl:"Original file", load:"Opening the file…", err:"The file could not be shown here.", open:"Open the file directly", bad:"The link is not valid.", home:"Home page"} }[L];
+  document.documentElement.lang = L; document.documentElement.dir = L === "ar" ? "rtl" : "ltr";
+  var q = new URLSearchParams(location.search), f = q.get("f") || "", name = q.get("t") || "";
+  var back = document.getElementById("back"), dl = document.getElementById("dl"), msg = document.getElementById("msg"), pages = document.getElementById("pages"), pg = document.getElementById("pg");
+  back.textContent = T.back; dl.textContent = T.dl;
+  // only files of this site: course/lang/name.pdf
+  var ok = /^[a-z0-9]+\/(ar|en)\/[a-z0-9-]+\.pdf$/.test(f);
+  if (!ok) { msg.innerHTML = T.bad + '<br><a href="index.html">' + T.home + "</a>"; dl.style.display = "none"; return; }
+  var course = f.split("/")[0];
+  back.href = "index.html#" + course;
+  back.addEventListener("click", function(e){ if (history.length > 1 && document.referrer.indexOf(location.host) >= 0) { e.preventDefault(); history.back(); } });
+  dl.href = f;
+  document.getElementById("title").textContent = name || f.split("/").pop().replace(".pdf", "");
+  if (name) document.title = name;
+  function fail(){ pages.innerHTML = ""; msg.innerHTML = T.err + '<br><a href="' + f + '">' + T.open + "</a>"; }
+  if (!window.pdfjsLib || !window.Promise) { fail(); return; }
+  msg.textContent = T.load;
+  try {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = "vendor/pdf.worker.min.js";
+    pdfjsLib.getDocument({ url: f }).promise.then(function(doc){
+      msg.textContent = "";
+      var n = doc.numPages, done = {}, busy = Promise.resolve();
+      pg.textContent = n + " p";
+      doc.getPage(1).then(function(first){
+        var v = first.getViewport({ scale: 1 }), ratio = v.height / v.width, holders = [];
+        for (var i = 1; i <= n; i++) {
+          var d = document.createElement("div"); d.className = "page"; d.setAttribute("data-n", i);
+          d.style.aspectRatio = v.width + " / " + v.height;
+          if (!("aspectRatio" in d.style)) d.style.paddingTop = (ratio * 100) + "%";
+          pages.appendChild(d); holders.push(d);
+        }
+        function render(d){
+          var i = +d.getAttribute("data-n"); if (done[i]) return; done[i] = 1;
+          busy = busy.then(function(){ return doc.getPage(i); }).then(function(p){
+            var w = d.clientWidth || pages.clientWidth, dpr = Math.min(Math.max(window.devicePixelRatio || 1, 1.5), 2.5);
+            var vp = p.getViewport({ scale: (w / p.getViewport({ scale: 1 }).width) * dpr });
+            var c = document.createElement("canvas"); c.setAttribute("dir", "ltr"); /* canvas text inherits page direction; RTL breaks glyph placement */ c.width = Math.floor(vp.width); c.height = Math.floor(vp.height);
+            d.style.paddingTop = ""; d.appendChild(c);
+            return p.render({ canvasContext: c.getContext("2d"), viewport: vp }).promise;
+          }).catch(function(){ done[i] = 0; });
+        }
+        if ("IntersectionObserver" in window) {
+          var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting) { render(e.target); io.unobserve(e.target); } }); }, { rootMargin: "900px 0px" });
+          holders.forEach(function(d){ io.observe(d); });
+        } else holders.forEach(render);
+      }).catch(fail);
+    }).catch(fail);
+  } catch (e) { fail(); }
+})();
+</script>
+</body>
+</html>
