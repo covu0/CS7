@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light dark">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ملخصات الميد · محارب</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+:root{--green:#143C30;--green2:#2E8B6A;--gold:#B5770F;--ink:#1C2B27;--muted:#5E6F69;--line:#DFE7E3;--soft:#F3F7F5;--tint:#EEF6F2;--bg:#FFFFFF;--warm:#FBF1DF;--card:#FFFFFF;--acc:#1F6B52;--acc2:#2E7D62;--head:#12241F;--bar:#143C30;--gold-t:#9A6208;--sol:#FFFCF6;--soon:#6B4A0C;--pillb:#CFD9D5;--pillc:#7A8985;--on:#143C30;
+--mono:"IBM Plex Mono",ui-monospace,Consolas,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans Arabic","IBM Plex Sans",Tahoma,sans-serif;font-size:16.5px;line-height:1.9}
+html[lang="en"] body{font-family:"IBM Plex Sans","IBM Plex Sans Arabic","Segoe UI",sans-serif;line-height:1.7}
+.wrap{max-width:880px;margin-inline:auto;padding-inline:18px;padding-block:18px 64px}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:8px}
+.n{font-family:var(--mono);background:var(--gold);color:#fff;border-radius:6px;padding:0 10px;font-size:.8rem;font-weight:600;line-height:1.9;flex:none;direction:ltr}
+
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;min-height:38px}
+.crumb{display:inline-flex;align-items:center;gap:8px;color:var(--acc);font-weight:600}
+.lang{display:inline-flex;gap:2px;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--soft);margin-inline-start:auto}
+.lang button{border:0;background:transparent;border-radius:999px;padding:3px 16px;color:var(--muted);font-weight:600;font-size:.88rem;line-height:1.7;transition:background .15s,color .15s}
+.lang button:focus-visible{border-radius:999px}
+.lang button[aria-pressed="true"]{background:var(--on);color:#fff}
+
+.head{border-top:3px solid var(--green2);border-bottom:3px solid var(--green2);text-align:center;padding:24px 0 20px;margin-bottom:24px}
+.head .lab{font-family:var(--mono);letter-spacing:.3em;font-size:.78rem;color:var(--acc2);direction:ltr}
+.head h1{font-size:2.3rem;line-height:1.35;margin:12px 0 4px;color:var(--head)}
+.head h1 em{font-style:normal;color:var(--gold)}
+.head .sub{color:var(--muted);font-size:.95rem}
+.head .sig{color:var(--acc);font-weight:700;margin-top:4px;font-family:"IBM Plex Sans Arabic",sans-serif}
+
+.next{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:var(--bar);color:#fff;border-radius:12px;padding:16px 22px;margin-bottom:26px}
+.next .big{font-family:var(--mono);font-size:2.2rem;font-weight:600;color:#F2C56B;line-height:1;direction:ltr}
+.next .t{flex:1;min-width:180px}
+.next .t b{display:block;font-size:1.1rem}
+.next .t span{color:#BFD3CB;font-size:.9rem}
+.next a{background:var(--gold);border-radius:8px;padding:6px 18px;font-weight:600}
+
+.strip{display:flex;align-items:center;gap:10px;background:var(--soft);border-inline-start:5px solid var(--gold);color:var(--acc);font-weight:700;font-size:1.08rem;padding:7px 16px;border-radius:3px;margin:26px 0 14px}
+.strip:first-of-type{margin-top:0}
+.strip small{margin-inline-start:auto;font-family:var(--mono);font-weight:400;color:var(--muted);font-size:.78rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.course{display:flex;flex-direction:column;gap:8px;border:1px solid var(--line);border-inline-start:5px solid var(--green2);border-radius:12px;padding:16px 20px;background:var(--card);transition:transform .15s,box-shadow .15s;min-width:0}
+a.course:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(20,60,48,.12)}
+.course .row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.course .ico{font-size:1.7rem;line-height:1}
+.course .name{font-weight:700;font-size:1.18rem;line-height:1.5}
+.course .meta{color:var(--muted);font-size:.9rem}
+.course .meta b{font-family:var(--mono);color:var(--gold)}
+.pill{font-size:.8rem;border:1px solid var(--pillb);color:var(--pillc);border-radius:20px;padding:0 12px;line-height:2;width:fit-content}
+.pill.on{border-color:var(--green2);color:var(--acc);background:var(--tint);font-weight:600}
+.course.off{border-inline-start-color:var(--pillb);opacity:.8}
+
+.bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:var(--bar);color:#fff;border-radius:10px;padding:14px 20px;margin-bottom:10px}
+.bar h2{margin:0;font-size:1.45rem;line-height:1.5;flex:1;min-width:0}
+.info{color:var(--muted);margin:0 0 22px;font-size:.95rem}
+.jump{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+.jump a{flex:1;min-width:150px;display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:11px;padding:10px 14px;font-weight:600;background:var(--card)}
+.jump a:hover{border-color:var(--green2);background:var(--tint)}
+.jump a span{font-size:1.3rem}
+.jump a small{margin-inline-start:auto;font-family:var(--mono);color:var(--muted);font-weight:400}
+.file{display:flex;align-items:stretch;border:1px solid var(--line);border-radius:11px;margin-bottom:10px;background:var(--card);overflow:hidden;transition:border-color .15s}
+.file:hover{border-color:var(--green2)}
+.file .open{flex:1;min-width:0;display:flex;align-items:center;gap:14px;padding:12px 16px;transition:background .15s}
+.file .open:hover{background:var(--tint)}
+.file .sol{display:flex;align-items:center;gap:6px;padding:0 16px;border-inline-start:1px solid var(--line);color:var(--gold-t);font-weight:600;font-size:.9rem;white-space:nowrap;background:var(--sol);transition:background .15s}
+.file .sol:hover{background:var(--warm)}
+.file .tt{flex:1;min-width:0}
+.file .tt b{display:block;font-size:1.05rem;overflow-wrap:anywhere}
+.file .tt span{color:var(--muted);font-size:.86rem}
+.file .pg{font-family:var(--mono);font-size:.74rem;color:var(--muted);white-space:nowrap}
+.file .go{font-family:var(--mono);font-size:.74rem;font-weight:600;color:#fff;background:var(--green2);border-radius:6px;padding:2px 10px}
+.file .only{font-family:var(--mono);font-size:.68rem;color:#9A6208;border:1px solid #E4C98F;border-radius:6px;padding:1px 7px;white-space:nowrap}
+.soon{background:var(--warm);border-radius:10px;padding:14px 20px;margin-top:22px;color:var(--soon)}
+footer{margin-top:40px;text-align:center;color:#9AA7A3;font-size:.82rem}
+@media (max-width:520px){.head h1{font-size:1.8rem}.file .pg{display:none}.file .open{gap:10px;padding:12px}.file .sol{padding:0 11px;font-size:.82rem}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+@media (prefers-color-scheme:dark){
+:root{--ink:#E6EEEA;--muted:#9FB2AB;--line:#2B3B36;--soft:#16211D;--tint:#17322A;--bg:#0D1411;--warm:#33290F;--card:#131C19;--acc:#74CFAA;--acc2:#63B796;--head:#F1F6F4;--bar:#17473A;--gold:#C98A1E;--gold-t:#E9B45A;--sol:#1E1A10;--soon:#EBCB8B;--pillb:#3A4B46;--pillc:#93A6A0;--on:#2E8B6A}
+a.course:hover{box-shadow:0 8px 22px rgba(0,0,0,.45)}
+.file .only{color:#E9B45A;border-color:#6B5320}
+footer{color:#7E918B}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="topbar"><span id="crumb"></span>
+<div class="lang" role="group" aria-label="Language"><button type="button" id="b-ar" aria-pressed="true">عربي</button><button type="button" id="b-en" aria-pressed="false">English</button></div></div>
+<main id="app"></main>
+<footer id="foot"></footer>
+</div>
+<script>
+// كل نص له نسخة عربية وإنجليزية. الملفات: f = اسم الملف داخل مجلد اللغة، sol = ملف الحل (اختياري)، وإذا ما له نسخة إنجليزية نحط only:"ar". عدد الصفحات في PG.
+const T = {
+ ar:{lab:"LEVEL 7 · COMPUTER SCIENCE", h1:'ملخصات <em>الميد</em>', sub:"كل مادة، وكل محاضرة في ملف لحالها", courses:"المواد", days:"يوم على أقرب ميد", open:"افتح المادة", at:"الساعة", exam:"الميد", left:n=>n>1?"باقي <b>"+n+"</b> يوم":n===1?"بكرة":n===0?"اليوم":"انتهى", ready:n=>n+" ملف جاهز", soon:"قريباً", all:"→ كل المواد", pages:"صفحة", only:"عربي فقط", sol:"الحل", sig:"محارب", foot:"محارب · المستوى السابع · علوم الحاسب", soonmore:"باقي الأقسام قريباً."},
+ en:{lab:"LEVEL 7 · COMPUTER SCIENCE", h1:'Midterm <em>Notes</em>', sub:"Every course, one file per lecture", courses:"Courses", days:"days to the nearest midterm", open:"Open course", at:"at", exam:"Midterm", left:n=>n>1?"<b>"+n+"</b> days left":n===1?"tomorrow":n===0?"today":"finished", ready:n=>n+" files ready", soon:"Coming soon", all:"← All courses", pages:"pages", only:"Arabic only", sol:"Solutions", sig:"Muharib", foot:"Muharib · Level 7 · Computer Science", soonmore:"More sections coming soon."}
+};
+const SEC = {
+ sum:{ico:"📘", ar:"الملخصات", en:"Summaries"},
+ pra:{ico:"✍️", ar:"التدريبات", en:"Practice"},
+ exa:{ico:"📝", ar:"الميدات السابقة", en:"Past midterms"}
+};
+const COURSES = [
+ {id:"math317", code:"MATH317", ico:"🧮", date:"2026-10-25", time:"12:15", name:{ar:"الطرق العددية", en:"Numerical Methods"},
+  scope:{ar:"نطاق الميد: المحاضرات 1 إلى 6", en:"Midterm scope: Lectures 1 to 6"},
+  sections:[
+   {k:"sum", files:[
+    {f:"ch1-1-preliminary-remarks.pdf", t:"Chapter 1.1 · Preliminary Remarks", d:{ar:"الأخطاء، Rounding، Horner", en:"Errors, rounding, Horner"}},
+    {f:"ch1-2-taylor-series.pdf", t:"Chapter 1.2 · Taylor Series", d:{ar:"السلاسل، Complete Horner، الباقي", en:"Series, complete Horner, remainder"}},
+    {f:"ch2-floating-point.pdf", t:"Chapter 2 · Floating-Point", d:{ar:"Single و Double، التحويل إلى Hex", en:"Single and double, conversion to hex"}},
+    {f:"ch3-1-bisection.pdf", t:"Chapter 3.1 · Bisection Method", d:{ar:"Bisection و False Position", en:"Bisection and false position"}},
+    {f:"ch3-2-newton.pdf", t:"Chapter 3.2 · Newton's Method", d:{ar:"القانون، التقارب، متى نوقف", en:"Formula, convergence, stopping"}}]},
+   {k:"pra", files:[
+    {f:"homework-1.pdf", sol:"homework-1-solutions.pdf", t:"Homework 1", d:{ar:"تدريب: الأخطاء، Taylor، Horner", en:"Practice: errors, Taylor, Horner"}},
+    {f:"homework-2.pdf", sol:"homework-2-solutions.pdf", t:"Homework 2", d:{ar:"تدريب: Floating-point", en:"Practice: floating-point"}},
+    {f:"mock-midterm.pdf", sol:"mock-midterm-solutions.pdf", t:"Mock Midterm", d:{ar:"اختبار تجريبي بشكل الميد", en:"A practice exam in the midterm's format"}}]},
+   {k:"exa", files:[
+    {f:"what-repeats.pdf", t:{ar:"وش يتكرر في الميد", en:"What repeats in the midterm"}, d:{ar:"تحليل أربع ميدات", en:"Analysis of four midterms"}},
+    {f:"midterm-472.pdf", sol:"midterm-472-solutions.pdf", t:"Midterm 472", d:{ar:"تدريب · 12/04/2026", en:"Practice · 12/04/2026"}},
+    {f:"midterm-471.pdf", sol:"midterm-471-solutions.pdf", t:"Midterm 471", d:{ar:"تدريب · 20/10/2025", en:"Practice · 20/10/2025"}},
+    {f:"midterm-462.pdf", sol:"midterm-462-solutions.pdf", t:"Midterm 462", d:{ar:"تدريب · 18/03/2025", en:"Practice · 18/03/2025"}},
+    {f:"midterm-461.pdf", sol:"midterm-461-solutions.pdf", t:"Midterm 461", d:{ar:"تدريب · 2024", en:"Practice · 2024"}}]}
+  ]},
+ {id:"cs383", code:"CS383", ico:"🧩", date:"2026-10-27", time:"1:30", name:{ar:"هندسة البرمجيات", en:"Software Engineering"},
+  scope:{ar:"نطاق الميد: المحاضرات 1 إلى 7", en:"Midterm scope: Lectures 1 to 7"}, more:true,
+  sections:[{k:"sum", files:[
+    {f:"lecture-1-introduction-1.pdf", t:"Lecture 1 · Introduction (I)", d:{ar:"تعريفات، التكاليف، Application types", en:"Definitions, costs, application types"}},
+    {f:"lecture-2-introduction-2.pdf", t:"Lecture 2 · Introduction (II)", d:{ar:"الأنشطة الأربعة، SaaS، الأخلاقيات", en:"The four activities, SaaS, ethics"}},
+    {f:"lecture-3-process-models.pdf", t:"Lecture 3 · Process Models (I)", d:{ar:"Waterfall، Incremental، Reuse", en:"Waterfall, incremental, reuse"}},
+    {f:"lecture-4-agile-scrum.pdf", t:"Lecture 4 · Agile & Scrum", d:{ar:"XP، حسابات الـ Sprint، اختيار النموذج", en:"XP, sprint calculations, choosing a model"}},
+    {f:"lecture-5-process-quality.pdf", t:"Lecture 5 · Process Quality", d:{ar:"Process attributes، GQM، المعايير", en:"Process attributes, GQM, standards"}},
+    {f:"lecture-6-project-management.pdf", t:"Lecture 6 · Project Management", d:{ar:"التخطيط، التقدير، المخاطر", en:"Planning, estimation, risk"}},
+    {f:"lecture-7-requirements.pdf", t:"Lecture 7 · Software Requirements", d:{ar:"User/System، FR/NFR، الـ SRS", en:"User/system, FR/NFR, the SRS"}}]}]},
+ {id:"math329", code:"MATH329", ico:"📈", date:"2026-10-29", time:"11:00", name:{ar:"بحوث العمليات", en:"Operations Research"}, sections:[]},
+ {id:"cs341", code:"CS341", ico:"🎨", date:"2026-11-02", time:"12:15", name:{ar:"الرسم بالحاسب", en:"Computer Graphics"}, sections:[]},
+ {id:"cs315", code:"CS315", ico:"🧠", date:"2026-11-04", time:"11:00", name:{ar:"تحليل وتصميم الخوارزميات", en:"Algorithms Analysis & Design"}, sections:[]},
+ {id:"cs342", code:"CS342", ico:"🖥️", date:"2026-11-08", time:"11:00", name:{ar:"البرمجة المرئية", en:"Visual Programming"}, sections:[]}
+];
+const PG = {"cs383/ar/lecture-1-introduction-1.pdf":7,"cs383/ar/lecture-2-introduction-2.pdf":8,"cs383/ar/lecture-3-process-models.pdf":13,"cs383/ar/lecture-4-agile-scrum.pdf":13,"cs383/ar/lecture-5-process-quality.pdf":10,"cs383/ar/lecture-6-project-management.pdf":10,"cs383/ar/lecture-7-requirements.pdf":13,"cs383/en/lecture-1-introduction-1.pdf":8,"cs383/en/lecture-2-introduction-2.pdf":8,"cs383/en/lecture-3-process-models.pdf":13,"cs383/en/lecture-4-agile-scrum.pdf":13,"cs383/en/lecture-5-process-quality.pdf":10,"cs383/en/lecture-6-project-management.pdf":11,"cs383/en/lecture-7-requirements.pdf":13,"math317/ar/ch1-1-preliminary-remarks.pdf":10,"math317/ar/ch1-2-taylor-series.pdf":10,"math317/ar/ch2-floating-point.pdf":12,"math317/ar/ch3-1-bisection.pdf":10,"math317/ar/ch3-2-newton.pdf":9,"math317/ar/homework-1-solutions.pdf":7,"math317/ar/homework-1.pdf":4,"math317/ar/homework-2-solutions.pdf":8,"math317/ar/homework-2.pdf":5,"math317/ar/midterm-461-solutions.pdf":3,"math317/ar/midterm-461.pdf":2,"math317/ar/midterm-462-solutions.pdf":3,"math317/ar/midterm-462.pdf":2,"math317/ar/midterm-471-solutions.pdf":3,"math317/ar/midterm-471.pdf":3,"math317/ar/midterm-472-solutions.pdf":4,"math317/ar/midterm-472.pdf":3,"math317/ar/mock-midterm-solutions.pdf":5,"math317/ar/mock-midterm.pdf":4,"math317/ar/what-repeats.pdf":6,"math317/en/ch1-1-preliminary-remarks.pdf":9,"math317/en/ch1-2-taylor-series.pdf":9,"math317/en/ch2-floating-point.pdf":12,"math317/en/ch3-1-bisection.pdf":10,"math317/en/ch3-2-newton.pdf":10,"math317/en/homework-1-solutions.pdf":7,"math317/en/homework-1.pdf":4,"math317/en/homework-2-solutions.pdf":8,"math317/en/homework-2.pdf":5,"math317/en/midterm-461-solutions.pdf":3,"math317/en/midterm-461.pdf":2,"math317/en/midterm-462-solutions.pdf":3,"math317/en/midterm-462.pdf":2,"math317/en/midterm-471-solutions.pdf":3,"math317/en/midterm-471.pdf":3,"math317/en/midterm-472-solutions.pdf":4,"math317/en/midterm-472.pdf":3,"math317/en/mock-midterm-solutions.pdf":5,"math317/en/mock-midterm.pdf":4,"math317/en/what-repeats.pdf":5};
+let L = "ar";
+try { const s = localStorage.getItem("lang"); if (s === "en" || s === "ar") L = s; } catch (e) {}
+const app = document.getElementById("app"), crumb = document.getElementById("crumb"), foot = document.getElementById("foot");
+const esc = s => s.replace(/&/g, "&amp;");
+const tx = v => typeof v === "string" ? v : v[L];
+function days(d){ const t=new Date(); t.setHours(0,0,0,0); return Math.round((new Date(d+"T00:00:00")-t)/864e5); }
+function dm(d){ const p=d.split("-"); return (+p[2])+"/"+(+p[1]); }
+const count = c => c.sections.reduce((a,s)=>a+s.files.length,0);
+function home(){
+  const t = T[L]; crumb.innerHTML = "";
+  const up = COURSES.filter(c=>days(c.date)>=0).sort((a,b)=>a.date<b.date?-1:1)[0];
+  app.innerHTML =
+  '<div class="head"><div class="lab">'+t.lab+'</div><h1>'+t.h1+'</h1><div class="sig">'+t.sig+'</div></div>'+
+  (up? '<div class="next"><div class="big">'+days(up.date)+'</div><div class="t"><b>'+t.days+': '+up.name[L]+'</b><span>'+dm(up.date)+' · '+t.at+' '+up.time+'</span></div>'+(count(up)?'<a href="#'+up.id+'">'+t.open+'</a>':'')+'</div>' : '')+
+  '<div class="strip">'+t.courses+'</div><div class="grid">'+
+  COURSES.map(c=>{ const n=count(c), tag=n?'a':'div';
+    return '<'+tag+' class="course'+(n?'':' off')+'"'+(n?' href="#'+c.id+'"':'')+'><div class="row"><span class="ico" aria-hidden="true">'+c.ico+'</span><span class="n">'+c.code+'</span></div><div class="name">'+c.name[L]+'</div><div class="meta">'+t.exam+' '+dm(c.date)+' · '+t.left(days(c.date))+'</div><span class="pill'+(n?' on':'')+'">'+(n? t.ready(n):t.soon)+'</span></'+tag+'>'; }).join("")+'</div>';
+}
+function course(c){
+  const t = T[L];
+  crumb.innerHTML = '<a class="crumb" href="#home">'+t.all+'</a>';
+  let h = '<div class="bar"><span class="n">'+c.code+'</span><h2>'+c.ico+' '+c.name[L]+'</h2></div>'+
+  '<p class="info">'+t.exam+' '+dm(c.date)+' '+t.at+' '+c.time+' · '+t.left(days(c.date)).replace(/<\/?b>/g,"")+(c.scope?' · '+c.scope[L]:'')+'</p>';
+  if (c.sections.length > 1) h += '<nav class="jump">'+c.sections.map(s=>'<a href="#'+c.id+'-'+s.k+'"><span aria-hidden="true">'+SEC[s.k].ico+'</span>'+SEC[s.k][L]+'<small>'+s.files.length+'</small></a>').join("")+'</nav>';
+  c.sections.forEach(s=>{
+    h += '<div class="strip" id="sec-'+s.k+'"><span aria-hidden="true">'+SEC[s.k].ico+'</span>'+SEC[s.k][L]+'<small>'+s.files.length+'</small></div>';
+    h += s.files.map((f,i)=>{ const fl = f.only || L, base = c.id+'/'+fl+'/';
+      return '<div class="file"><a class="open" href="'+base+f.f+'" target="_blank" rel="noopener"><span class="n">'+String(i+1).padStart(2,"0")+'</span><span class="tt"><b dir="auto">'+esc(tx(f.t))+'</b><span>'+f.d[L]+'</span></span>'+(f.only && f.only!==L?'<span class="only">'+t.only+'</span>':'')+'<span class="pg">'+(PG[base+f.f]||"")+' '+t.pages+'</span><span class="go">PDF</span></a>'+(f.sol?'<a class="sol" href="'+base+f.sol+'" target="_blank" rel="noopener">'+t.sol+'</a>':'')+'</div>'; }).join("");
+  });
+  if (c.more) h += '<div class="soon">'+t.soonmore+'</div>';
+  app.innerHTML = h;
+}
+function route(){
+  const t = T[L];
+  document.documentElement.lang = L; document.documentElement.dir = L === "ar" ? "rtl" : "ltr";
+  document.getElementById("b-ar").setAttribute("aria-pressed", L === "ar");
+  document.getElementById("b-en").setAttribute("aria-pressed", L === "en");
+  foot.textContent = t.foot; document.title = (L === 'ar' ? 'ملخصات الميد · محارب' : 'Midterm Notes · Muharib');
+  const h = (location.hash||"").slice(1), i = h.indexOf("-"), cid = i<0?h:h.slice(0,i), sk = i<0?"":h.slice(i+1);
+  const c = COURSES.find(x=>x.id===cid);
+  if (c && count(c)) { course(c); const el = sk && document.getElementById("sec-"+sk); if (el) el.scrollIntoView(); else window.scrollTo(0,0); }
+  else { home(); window.scrollTo(0,0); }
+}
+function setLang(x){ L = x; try { localStorage.setItem("lang", x); } catch (e) {} route(); }
+document.getElementById("b-ar").addEventListener("click", ()=>setLang("ar"));
+document.getElementById("b-en").addEventListener("click", ()=>setLang("en"));
+window.addEventListener("hashchange", route); route();
+</script>
+</body>
+</html>
