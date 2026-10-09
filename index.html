@@ -95,7 +95,6 @@ footer{margin-top:64px;text-align:center;color:var(--faint);font-size:.8rem}
 <div class="topbar"><span id="crumb"></span>
 <div class="lang" role="group" aria-label="Language"><button type="button" id="b-ar" aria-pressed="true">عربي</button><button type="button" id="b-en" aria-pressed="false">English</button></div></div>
 <main id="app"></main>
-<footer id="foot"></footer>
 </div>
 <script>
 // كل نص له نسخة عربية وإنجليزية. الملفات: f = اسم الملف داخل مجلد اللغة، sol = ملف الحل (اختياري)، وإذا ما له نسخة إنجليزية نحط only:"ar". عدد الصفحات في PG.
@@ -165,7 +164,7 @@ const COURSES = [
 const PG = {"cs383/ar/lecture-1-introduction-1.pdf":7,"cs383/ar/lecture-2-introduction-2.pdf":8,"cs383/ar/lecture-3-process-models.pdf":13,"cs383/ar/lecture-4-agile-scrum.pdf":13,"cs383/ar/lecture-5-process-quality.pdf":10,"cs383/ar/lecture-6-project-management.pdf":10,"cs383/ar/lecture-7-requirements.pdf":13,"cs383/en/lecture-1-introduction-1.pdf":8,"cs383/en/lecture-2-introduction-2.pdf":8,"cs383/en/lecture-3-process-models.pdf":13,"cs383/en/lecture-4-agile-scrum.pdf":13,"cs383/en/lecture-5-process-quality.pdf":10,"cs383/en/lecture-6-project-management.pdf":11,"cs383/en/lecture-7-requirements.pdf":13,"math317/ar/ch1-1-preliminary-remarks.pdf":10,"math317/ar/ch1-2-taylor-series.pdf":10,"math317/ar/ch2-floating-point.pdf":12,"math317/ar/ch3-1-bisection.pdf":10,"math317/ar/ch3-2-newton.pdf":9,"math317/ar/homework-1-solutions.pdf":7,"math317/ar/homework-1.pdf":4,"math317/ar/homework-2-solutions.pdf":8,"math317/ar/homework-2.pdf":5,"math317/ar/midterm-461-solutions.pdf":3,"math317/ar/midterm-461.pdf":2,"math317/ar/midterm-462-solutions.pdf":3,"math317/ar/midterm-462.pdf":2,"math317/ar/midterm-471-solutions.pdf":3,"math317/ar/midterm-471.pdf":3,"math317/ar/midterm-472-solutions.pdf":4,"math317/ar/midterm-472.pdf":3,"math317/ar/mock-midterm-solutions.pdf":5,"math317/ar/mock-midterm.pdf":4,"math317/ar/what-repeats.pdf":6,"math317/en/ch1-1-preliminary-remarks.pdf":9,"math317/en/ch1-2-taylor-series.pdf":9,"math317/en/ch2-floating-point.pdf":12,"math317/en/ch3-1-bisection.pdf":10,"math317/en/ch3-2-newton.pdf":10,"math317/en/homework-1-solutions.pdf":7,"math317/en/homework-1.pdf":4,"math317/en/homework-2-solutions.pdf":8,"math317/en/homework-2.pdf":5,"math317/en/midterm-461-solutions.pdf":3,"math317/en/midterm-461.pdf":2,"math317/en/midterm-462-solutions.pdf":3,"math317/en/midterm-462.pdf":2,"math317/en/midterm-471-solutions.pdf":3,"math317/en/midterm-471.pdf":3,"math317/en/midterm-472-solutions.pdf":4,"math317/en/midterm-472.pdf":3,"math317/en/mock-midterm-solutions.pdf":5,"math317/en/mock-midterm.pdf":4,"math317/en/what-repeats.pdf":5,"math329/ar/formulation-practice-solutions.pdf":4,"math329/ar/formulation-practice.pdf":5,"math329/ar/lecture-1-introduction.pdf":10,"math329/ar/lecture-2-graphical-method.pdf":13,"math329/ar/lecture-3-standard-form.pdf":13,"math329/ar/lecture-4-simplex.pdf":14,"math329/ar/midterm-461-solutions.pdf":6,"math329/ar/midterm-461.pdf":4,"math329/ar/midterm-462-solutions.pdf":6,"math329/ar/midterm-462.pdf":4,"math329/ar/midterm-471-solutions.pdf":4,"math329/ar/midterm-471.pdf":3,"math329/ar/midterm-472-solutions.pdf":5,"math329/ar/midterm-472.pdf":3,"math329/ar/mock-midterm-solutions.pdf":5,"math329/ar/mock-midterm.pdf":5,"math329/ar/quiz-3-4-big-m-solutions.pdf":5,"math329/ar/quiz-3-4-big-m.pdf":3,"math329/ar/what-repeats.pdf":8,"math329/en/formulation-practice-solutions.pdf":4,"math329/en/formulation-practice.pdf":5,"math329/en/lecture-1-introduction.pdf":10,"math329/en/lecture-2-graphical-method.pdf":15,"math329/en/lecture-3-standard-form.pdf":13,"math329/en/lecture-4-simplex.pdf":14,"math329/en/midterm-461-solutions.pdf":6,"math329/en/midterm-461.pdf":4,"math329/en/midterm-462-solutions.pdf":6,"math329/en/midterm-462.pdf":4,"math329/en/midterm-471-solutions.pdf":4,"math329/en/midterm-471.pdf":3,"math329/en/midterm-472-solutions.pdf":5,"math329/en/midterm-472.pdf":3,"math329/en/mock-midterm-solutions.pdf":5,"math329/en/mock-midterm.pdf":5,"math329/en/quiz-3-4-big-m-solutions.pdf":5,"math329/en/quiz-3-4-big-m.pdf":3,"math329/en/what-repeats.pdf":8};
 let L = "ar";
 try { const s = localStorage.getItem("lang"); if (s === "en" || s === "ar") L = s; } catch (e) {}
-const app = document.getElementById("app"), crumb = document.getElementById("crumb"), foot = document.getElementById("foot");
+const app = document.getElementById("app"), crumb = document.getElementById("crumb"), foot = null;
 const esc = s => s.replace(/&/g, "&amp;");
 const tx = v => typeof v === "string" ? v : v[L];
 function days(d){ const t=new Date(); t.setHours(0,0,0,0); return Math.round((new Date(d+"T00:00:00")-t)/864e5); }
@@ -184,7 +183,7 @@ function home(){
 function head(c){
   const t = T[L];
   return '<div class="bar"><span class="n">'+c.code+'</span><h2>'+c.name[L]+'</h2></div>'+
-  '<p class="info">'+t.exam+' '+dm(c.date)+' '+t.at+' '+c.time+' · '+t.left(days(c.date)).replace(/<\/?b>/g,"")+(c.scope?' · '+c.scope[L]:'')+'</p>';
+  '<p class="info">'+(c.scope?c.scope[L]:'')+'</p>';
 }
 function course(c){
   const t = T[L];
@@ -206,7 +205,7 @@ function route(){
   document.documentElement.lang = L; document.documentElement.dir = L === "ar" ? "rtl" : "ltr";
   document.getElementById("b-ar").setAttribute("aria-pressed", L === "ar");
   document.getElementById("b-en").setAttribute("aria-pressed", L === "en");
-  foot.textContent = t.foot; document.title = (L === 'ar' ? 'ملخصات الميد · محارب' : 'Midterm Notes · Muharib');
+  document.title = (L === 'ar' ? 'ملخصات الميد · محارب' : 'Midterm Notes · Muharib');
   const h = (location.hash||"").slice(1), i = h.indexOf("-"), cid = i<0?h:h.slice(0,i), sk = i<0?"":h.slice(i+1);
   const c = COURSES.find(x=>x.id===cid);
   if (c && count(c)) { const sec = sk && c.sections.find(x=>x.k===sk && x.files.length); if (sec) section(c, sec); else course(c); window.scrollTo(0,0); }
