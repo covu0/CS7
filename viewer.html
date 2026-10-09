@@ -14,6 +14,8 @@ a{color:inherit;text-decoration:none}
 .bar{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:10px;background:var(--bar);border-bottom:1px solid var(--line);padding:10px 14px}
 .bar a{flex:none;border:1px solid var(--line);border-radius:999px;padding:4px 14px;font-weight:500;font-size:.84rem;white-space:nowrap;color:var(--acc);transition:background .15s,border-color .15s}
 .bar a:hover{background:var(--soft);border-color:var(--acc)}
+.bar .dl{background:var(--acc);border-color:var(--acc);color:var(--bar);font-weight:600}
+.bar .dl:hover{background:var(--acc);opacity:.88}
 .bar .t{flex:1;min-width:0;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;direction:ltr;text-align:center;font-size:.92rem}
 .bar .pg{flex:none;font-size:.76rem;color:var(--muted);direction:ltr}
 :focus-visible{outline:2px solid var(--acc);outline-offset:2px}
@@ -26,7 +28,7 @@ a{color:inherit;text-decoration:none}
 </style>
 </head>
 <body>
-<div class="bar"><a class="back" id="back" href="index.html"></a><span class="t" id="title"></span><span class="pg" id="pg"></span><a class="dl" id="dl" href="#" target="_blank" rel="noopener"></a></div>
+<div class="bar"><a class="back" id="back" href="index.html"></a><span class="t" id="title"></span><span class="pg" id="pg"></span><a class="dl" id="dl" href="#" download></a></div>
 <div id="msg"></div>
 <div id="pages" dir="ltr"></div>
 <script src="vendor/pdf.min.js"></script>
@@ -34,8 +36,8 @@ a{color:inherit;text-decoration:none}
 (function(){
   var L = "ar";
   try { var s = localStorage.getItem("lang"); if (s === "en" || s === "ar") L = s; } catch (e) {}
-  var T = { ar:{back:"رجوع →", dl:"الملف الأصلي", load:"جاري فتح الملف…", err:"ما قدرنا نعرض الملف هنا.", open:"افتح الملف مباشرة", bad:"الرابط غير صحيح.", home:"الصفحة الرئيسية"},
-            en:{back:"← Back", dl:"Original file", load:"Opening the file…", err:"The file could not be shown here.", open:"Open the file directly", bad:"The link is not valid.", home:"Home page"} }[L];
+  var T = { ar:{back:"رجوع →", dl:"تحميل ↓", load:"جاري فتح الملف…", err:"ما قدرنا نعرض الملف هنا.", open:"افتح الملف مباشرة", bad:"الرابط غير صحيح.", home:"الصفحة الرئيسية"},
+            en:{back:"← Back", dl:"Download ↓", load:"Opening the file…", err:"The file could not be shown here.", open:"Open the file directly", bad:"The link is not valid.", home:"Home page"} }[L];
   document.documentElement.lang = L; document.documentElement.dir = L === "ar" ? "rtl" : "ltr";
   var q = new URLSearchParams(location.search), f = q.get("f") || "", name = q.get("t") || "";
   var back = document.getElementById("back"), dl = document.getElementById("dl"), msg = document.getElementById("msg"), pages = document.getElementById("pages"), pg = document.getElementById("pg");
@@ -46,7 +48,7 @@ a{color:inherit;text-decoration:none}
   var course = f.split("/")[0];
   back.href = "index.html#" + course;
   back.addEventListener("click", function(e){ if (history.length > 1 && document.referrer.indexOf(location.host) >= 0) { e.preventDefault(); history.back(); } });
-  dl.href = f;
+  dl.href = f; var parts = f.split("/"); dl.setAttribute("download", parts[0].toUpperCase() + "-" + parts[2].replace(".pdf", "") + "-" + parts[1] + ".pdf");
   document.getElementById("title").textContent = name || f.split("/").pop().replace(".pdf", "");
   if (name) document.title = name;
   function fail(){ pages.innerHTML = ""; msg.innerHTML = T.err + '<br><a href="' + f + '">' + T.open + "</a>"; }
