@@ -125,11 +125,11 @@ const CID=(new URLSearchParams(location.search).get("c")||"math317").replace(/[^
 
 const $=id=>document.getElementById(id);
 const S={
- ar:{quiz:"كويز",sub:"اختيارات وصح وخطأ من الملخصات والميدات",topics:"المواضيع",count:"عدد الأسئلة",all:"الكل",start:"ابدأ",miss:n=>`راجع أخطائي السابقة (${n})`,
+ ar:{quiz:"كويز",sub:"اختيارات وصح وخطأ من الملخصات والميدات",topics:"المواضيع",count:"عدد الأسئلة",all:"الكل",start:"ابدأ",miss:n=>`راجع أخطاء آخر كويز (${n})`,
   nostore:"متصفحك ما يسمح بحفظ الأخطاء (غالباً تصفح خاص). الكويز يشتغل عادي بس الأخطاء تنمسح لما تحدّث.",tf:" · صح وخطأ",ok:"صح",no:"غلط",next:"التالي",result:"النتيجة",
   retry:"أعد الأسئلة اللي غلطت فيها",again:"كويز جديد",wrong:"اللي غلطت فيه",na:"الكويز غير متوفر",
   msg:p=>p===1?"فل مارك":p>=.8?"ممتاز، راجع اللي غلطت فيه":p>=.5?"زين، بس راجع الغلط":"ارجع للملخص وبعدها عيد"},
- en:{quiz:"Quiz",sub:"Multiple choice and true/false from the notes and past midterms",topics:"Topics",count:"Number of questions",all:"All",start:"Start",miss:n=>`Review my past mistakes (${n})`,
+ en:{quiz:"Quiz",sub:"Multiple choice and true/false from the notes and past midterms",topics:"Topics",count:"Number of questions",all:"All",start:"Start",miss:n=>`Review mistakes from my last quiz (${n})`,
   nostore:"Your browser does not allow saving mistakes (probably private browsing). The quiz still works, but mistakes are cleared on refresh.",tf:" · True/False",ok:"Correct",no:"Wrong",next:"Next",result:"Result",
   retry:"Retry the questions I got wrong",again:"New quiz",wrong:"What I got wrong",na:"Quiz not available",
   msg:p=>p===1?"Full marks":p>=.8?"Excellent, review the ones you missed":p>=.5?"Good, but review your mistakes":"Go back to the notes, then try again"}};
@@ -156,7 +156,7 @@ function drawSetup(){
   for(const c of [10,20,0])C.append(chip(c?String(c):t("all"),count===c,()=>{count=c;drawSetup()}));
   $("start").disabled=sel.size===0;
 }
-function start(qs){list=qs;i=0;right=0;wrong=[];$("setup").hidden=true;$("done").hidden=true;$("play").hidden=false;show()}
+function start(qs){list=qs;i=0;right=0;wrong=[];store.set(MKEY,[]);$("setup").hidden=true;$("done").hidden=true;$("play").hidden=false;show()}
 $("start").onclick=()=>{let pool=shuffle(BANK.filter(q=>sel.has(q.t)));if(count)pool=pool.slice(0,count);start(pool)};
 $("missBtn").onclick=()=>{const m=store.get(MKEY);start(shuffle(BANK.filter(q=>m.includes(q.id))))};
 function show(){
@@ -175,9 +175,7 @@ function pick(btn,ok,items){
   const q=list[i],bs=[...$("opts").children];
   bs.forEach((b,j)=>{b.disabled=true;if(items[j].ok)b.classList.add("ok")});
   if(!ok)btn.classList.add("bad");
-  let m=store.get(MKEY);
-  if(ok){right++;m=m.filter(x=>x!==q.id)}else{wrong.push(q);if(!m.includes(q.id))m.push(q.id)}
-  store.set(MKEY,m);
+  if(ok)right++;else{wrong.push(q);store.set(MKEY,wrong.map(x=>x.id))}
   answered=ok?"ok":"no";drawEx();$("next").hidden=false;
 }
 function drawEx(){const q=list[i],ex=$("ex");ex.className="ex "+(answered==="ok"?"good":"no");ex.innerHTML=`<b>${t(answered)}</b>${EX(q)}`;ex.hidden=false;
@@ -194,7 +192,7 @@ function renderDone(){
   $("retry").hidden=!wrong.length;
   $("miss").innerHTML=wrong.length?`<h3>${t("wrong")}</h3>`+wrong.map(q=>`<div class="mi"><p class="q">${q.q}</p><div class="ans">✓ ${ansText(q)}</div><div class="ex">${EX(q)}</div></div>`).join(""):"";
 }
-$("retry").onclick=()=>start(shuffle(wrong));
+$("retry").onclick=()=>start(shuffle(wrong.slice()));
 $("again").onclick=()=>{$("done").hidden=true;$("setup").hidden=false;drawSetup()};
 function applyLang(){
   document.documentElement.lang=L;document.documentElement.dir=L==="ar"?"rtl":"ltr";
@@ -210,7 +208,7 @@ function applyLang(){
 document.querySelectorAll(".lang button").forEach(b=>b.onclick=()=>{L=b.dataset.l;try{localStorage.setItem("lang",L)}catch(e){}applyLang()});
 function boot(){
   if(!QUIZ){applyLang();$("setup").innerHTML=`<p style="text-align:center;margin:0">${t("na")}</p>`;return}
-  TOPICS=QUIZ.topics;BANK=QUIZ.bank;MKEY="quiz-"+QUIZ.id+"-missed";sel=new Set(Object.keys(TOPICS));
+  TOPICS=QUIZ.topics;BANK=QUIZ.bank;MKEY="quiz-"+QUIZ.id+"-last";sel=new Set(Object.keys(TOPICS));
   $("hcode").textContent=QUIZ.code;
   applyLang();drawSetup();
 }
