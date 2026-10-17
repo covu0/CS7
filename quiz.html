@@ -88,7 +88,9 @@ button{font:inherit;cursor:pointer;color:inherit}
 <div class="chips" id="topics"></div>
 <p class="lbl">عدد الأسئلة</p>
 <div class="chips" id="counts"></div>
+<button class="ghost" id="missBtn" hidden style="margin:0 0 12px;border-color:var(--gold);color:var(--gold)"></button>
 <button class="go" id="start">ابدأ</button>
+<p class="lbl" id="noStore" hidden style="margin:12px 0 0;text-align:center">متصفحك ما يسمح بحفظ الأخطاء (غالباً تصفح خاص). الكويز يشتغل عادي بس الأخطاء تنمسح لما تحدّث.</p>
 </section>
 
 <section id="play" class="box" hidden>
@@ -173,7 +175,11 @@ const BANK=[
 ];
 
 const $=id=>document.getElementById(id);
-const store={get(k){try{return JSON.parse(localStorage.getItem(k)||"[]")}catch(e){return[]}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const CK=k=>{const m=document.cookie.match(new RegExp("(?:^|; )"+k+"=([^;]*)"));return m?decodeURIComponent(m[1]):null};
+const store={
+  get(k){let v=null;try{v=localStorage.getItem(k)}catch(e){}if(!v)v=CK(k);try{return JSON.parse(v||"[]")}catch(e){return[]}},
+  set(k,v){const j=JSON.stringify(v);try{localStorage.setItem(k,j)}catch(e){}try{document.cookie=k+"="+encodeURIComponent(j)+";max-age=31536000;path=/;SameSite=Lax"}catch(e){}}};
+const canStore=(()=>{try{localStorage.setItem("_t","1");const ok=localStorage.getItem("_t")==="1";localStorage.removeItem("_t");if(ok)return true}catch(e){}try{document.cookie="_t=1;path=/";return /(^|; )_t=1/.test(document.cookie)}catch(e){return false}})();
 const MKEY="quiz-math317-missed";
 let sel=new Set(Object.keys(TOPICS)),count=10,useMissed=false,list=[],i=0,right=0,wrong=[];
 function shuffle(a){a=a.slice();for(let j=a.length-1;j>0;j--){const r=Math.floor(Math.random()*(j+1));[a[j],a[r]]=[a[r],a[j]]}return a}
@@ -181,17 +187,17 @@ function chip(txt,on,fn,cls=""){const b=document.createElement("button");b.class
 function drawSetup(){
   const T=$("topics");T.innerHTML="";
   const missed=store.get(MKEY).filter(id=>BANK.some(q=>q.id===id));
-  if(missed.length)T.append(chip(`أخطائي السابقة<small>${missed.length}</small>`,useMissed,()=>{useMissed=!useMissed;drawSetup()},"warn"));
+  const mb=$("missBtn");mb.hidden=!missed.length;mb.textContent=`راجع أخطائي السابقة (${missed.length})`;
+  $("noStore").hidden=canStore;
   for(const k in TOPICS){const n=BANK.filter(q=>q.t===k).length;
-    T.append(chip(`${TOPICS[k]}<small>${n}</small>`,!useMissed&&sel.has(k),()=>{useMissed=false;sel.has(k)?sel.delete(k):sel.add(k);drawSetup()}))}
+    T.append(chip(`${TOPICS[k]}<small>${n}</small>`,sel.has(k),()=>{sel.has(k)?sel.delete(k):sel.add(k);drawSetup()}))}
   const C=$("counts");C.innerHTML="";
   for(const c of [10,20,0])C.append(chip(c?String(c):"الكل",count===c,()=>{count=c;drawSetup()}));
-  $("start").disabled=!useMissed&&sel.size===0;
+  $("start").disabled=sel.size===0;
 }
 function start(qs){list=qs;i=0;right=0;wrong=[];$("setup").hidden=true;$("done").hidden=true;$("play").hidden=false;show()}
-$("start").onclick=()=>{
-  let pool=useMissed?BANK.filter(q=>store.get(MKEY).includes(q.id)):BANK.filter(q=>sel.has(q.t));
-  pool=shuffle(pool);if(count&&!useMissed)pool=pool.slice(0,count);start(pool)};
+$("start").onclick=()=>{let pool=shuffle(BANK.filter(q=>sel.has(q.t)));if(count)pool=pool.slice(0,count);start(pool)};
+$("missBtn").onclick=()=>{const m=store.get(MKEY);start(shuffle(BANK.filter(q=>m.includes(q.id))))};
 function show(){
   const q=list[i];$("cnt").textContent=`${i+1} / ${list.length}`;$("barI").style.width=(i/list.length*100)+"%";
   $("tag").innerHTML=TOPICS[q.t]+(q.k==="tf"?" · صح وخطأ":"");
