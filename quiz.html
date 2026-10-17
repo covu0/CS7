@@ -171,8 +171,8 @@ const BANK=[
 {id:"n2",t:"new",k:"mc",q:"Near a simple root, Newton's method converges:",o:["quadratically","linearly","never","only with bisection"],a:0,e:"Quadratic convergence: الخانات الصحيحة تتضاعف تقريباً كل خطوة."},
 {id:"n3",t:"new",k:"tf",q:"Newton's method always converges for any starting point.",a:false,e:"لازم x₀ قريب من الجذر."},
 {id:"n4",t:"new",k:"tf",q:"Newton's method needs the derivative of the function.",a:true,e:"القانون فيه f′."},
-{id:"n5",t:"new",k:"mc",q:"f(x) = x² − 2, x₀ = 1. Newton gives x₁ =",o:["1.5","1.4167","2","0.5"],a:0,e:`${M("1 − (−1) ÷ 2 = 1.5")}`},
-{id:"n6",t:"new",k:"mc",q:"Continuing: f(x) = x² − 2, x₁ = 1.5. Then x₂ ≈",o:["1.41667","1.5","1.41421","1.375"],a:0,e:`${M("1.5 − 0.25 ÷ 3 = 1.41667")}`},
+{id:"n5",t:"new",k:"mc",q:"f(x) = x² − 2, x₀ = 1. Newton gives x₁ =",o:["1.5","1.4167","2","0.5"],a:0,e:`f(x) = x² − 2 → f(1) = −1<br>f′(x) = 2x → f′(1) = 2<br>${M("x₁ = 1 − (−1) ÷ 2 = 1.5")}`},
+{id:"n6",t:"new",k:"mc",q:"Continuing: f(x) = x² − 2, x₁ = 1.5. Then x₂ ≈",o:["1.41667","1.5","1.41421","1.375"],a:0,e:`f(1.5) = 1.5² − 2 = 0.25<br>f′(x) = 2x → f′(1.5) = 3<br>${M("x₂ = 1.5 − 0.25 ÷ 3 = 1.41667")}`},
 {id:"n7",t:"new",k:"mc",q:"Newton's formula comes from:",o:["the root of the tangent line","the midpoint of [a, b]","the chord between two points","Horner's algorithm"],a:0,e:"جذر خط المماس، أو أول حدين من Taylor."},
 {id:"n8",t:"new",k:"mc",q:"Newton's iteration should stop when:",o:["|εₐ| is below the tolerance or n exceeds n_max","f′(x) = 1","x becomes negative","after exactly 3 steps"],a:0,e:"الخطأ التقريبي أقل من المسموح، أو نتعدى عدد التكرارات."}
 ];
