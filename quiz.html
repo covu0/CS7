@@ -80,8 +80,8 @@ button{font:inherit;cursor:pointer;color:inherit}
 </head>
 <body>
 <div class="wrap">
-<div class="topbar"><a class="crumb" href="./#math317">→ MATH317</a></div>
-<div class="head"><div class="lab">MIDTERM QUIZ</div><h1>كويز <em>MATH317</em></h1><p>اختيارات وصح وخطأ من الملخصات والميدات</p></div>
+<div class="topbar"><a class="crumb" id="back" href="./">→</a></div>
+<div class="head"><div class="lab">MIDTERM QUIZ</div><h1>كويز <em id="hcode"></em></h1><p>اختيارات وصح وخطأ من الملخصات والميدات</p></div>
 
 <section id="setup" class="box">
 <p class="lbl">المواضيع</p>
@@ -114,65 +114,9 @@ button{font:inherit;cursor:pointer;color:inherit}
 <script>
 const F=(a,b)=>`<span class="fr"><span>${a}</span><span>${b}</span></span>`;
 const M=s=>`<span class="mono">${s}</span>`;
-const TOPICS={ch1:"Errors &amp; Horner",tay:"Taylor",flo:"Floating-point",bis:"Bisection",new:"Newton"};
-// k: mc = multiple choice (a = index of correct option), tf = true/false (a = true|false)
-const BANK=[
-{id:"c1",t:"ch1",k:"mc",q:"How many significant digits does 0.004050 have?",o:["3","4","6","7"],a:1,e:"الأصفار اللي قبل أول رقم غير صفري ما تنحسب. الباقي 4050، أربع خانات (الصفر الأخير بعد الفاصلة ينحسب)."},
-{id:"c2",t:"ch1",k:"mc",q:"The exact value is α = 2.5 and the approximation is β = 2.4. The relative error is:",o:["0.04","0.0417","0.1","0.4"],a:0,e:`${F("| α − β |","| α |")} = ${F("0.1","2.5")} = 0.04. نقسم على القيمة المضبوطة α.`},
-{id:"c3",t:"ch1",k:"tf",q:"The relative error is computed by dividing by the approximate value.",a:false,e:"نقسم على القيمة المضبوطة، مو التقريبية."},
-{id:"c4",t:"ch1",k:"mc",q:"Chopping 3.14159 to 4 significant digits gives:",o:["3.141","3.142","3.1416","3.14"],a:0,e:"Chopping يحذف بدون تعديل، فتطلع 3.141. أما Rounding فتعطي 3.142."},
-{id:"c5",t:"ch1",k:"mc",q:"Rounding 2.71828 to 3 significant digits gives:",o:["2.71","2.72","2.718","2.7"],a:1,e:"الخانة الرابعة 8 أكبر من 5، فنزيد الثالثة: 2.72."},
-{id:"c6",t:"ch1",k:"tf",q:"Significant digits are only important when rounding final results, not during intermediate calculations.",a:false,e:"ميد 472. مهمة في كل خطوة، لأن التقريب في النص يكبّر الخطأ."},
-{id:"c7",t:"ch1",k:"tf",q:"Horner's algorithm is used for efficiently evaluating polynomials.",a:true,e:"ميد 472. يحسب الـ polynomial بدون أسس."},
-{id:"c9",t:"ch1",k:"mc",q:"In Horner's algorithm at x = r, if the last number of the row is 0, then:",o:["r is a root of P","P has no roots","r is the largest coefficient","the method failed"],a:0,e:"P(r) = 0، يعني r جذر، والباقي معاملات polynomial أقل بدرجة (Deflation)."},
-{id:"c10",t:"ch1",k:"mc",q:"Horner's algorithm is also called:",o:["Nested multiplication","Bisection","Chopping","Truncation"],a:0,e:"يسمى Nested multiplication أو Synthetic division."},
-{id:"c11",t:"ch1",k:"tf",q:"A result is never more accurate than the least accurate number used.",a:true,e:"أضعف رقم في الحساب يحدد دقة النتيجة."},
-{id:"c12",t:"ch1",k:"mc",q:"Which is the better measure of accuracy?",o:["Relative error","Absolute error","Number of iterations","Chopping error"],a:0,e:"الخطأ النسبي يقارن الخطأ بحجم الرقم نفسه."},
-{id:"c13",t:"ch1",k:"tf",q:"Rounding replaces a number with an approximation that minimizes error, whereas chopping discards digits without adjustment.",a:true,e:"ميد 472."},
+let QUIZ=null,TOPICS,BANK,MKEY;
+const CID=(new URLSearchParams(location.search).get("c")||"math317").replace(/[^a-z0-9]/g,"");
 
-{id:"t1",t:"tay",k:"tf",q:"The Taylor series converges rapidly for points far from the expansion point.",a:false,e:"ميد 472. يتقارب بسرعة قرب النقطة، وبعيد عنها بطيء أو ما يتقارب."},
-{id:"t2",t:"tay",k:"mc",q:"A Maclaurin series is a Taylor series about:",o:["c = 0","c = 1","c = x","any c"],a:0,e:"Maclaurin يعني c = 0."},
-{id:"t3",t:"tay",k:"mc",q:"The Mean-Value Theorem is the special case of Taylor's theorem when:",o:["all derivatives are zero","n = 1","n = 0","c = 0"],a:2,e:"ميد 472. حالة n = 0، وعبارة zero derivatives غلط."},
-{id:"t4",t:"tay",k:"tf",q:"The Taylor series of a polynomial is exact after a finite number of terms.",a:true,e:"المشتقات توصل صفر، فالسلسلة توقف."},
-{id:"t5",t:"tay",k:"mc",q:"In terms of h, the remainder Eₙ₊₁ is:",o:["O(hⁿ)","O(hⁿ⁺¹)","O(h)","O(hⁿ⁻¹)"],a:1,e:"Eₙ₊₁ = O(hⁿ⁺¹)."},
-{id:"t7",t:"tay",k:"mc",q:"The Maclaurin series of e⁻ˣ starts with:",o:[`1 − x + ${F("x²","2")} − ${F("x³","6")}`,`1 + x + ${F("x²","2")} + ${F("x³","6")}`,`x − ${F("x³","6")} + ${F("x⁵","120")}`,`1 − ${F("x²","2")} + ${F("x⁴","24")}`],a:0,e:"نعوّض −x مكان x في سلسلة eˣ، فالإشارات تتناوب."},
-{id:"t8",t:"tay",k:"mc",q:"For an alternating series with terms decreasing to zero, the error after stopping is at most:",o:["the first omitted term","the last term used","the sum of all terms","zero"],a:0,e:"أول حد ما أخذناه."},
-{id:"t10",t:"tay",k:"mc",q:"The series for ln(1 + x) represents the function for:",o:["0 ≤ x ≤ 1","every x","x > 1 only","x < 0 only"],a:0,e:"لما x أكبر من 1 ما تتقارب."},
-{id:"t11",t:"tay",k:"mc",q:"In the remainder term, ξ lies:",o:["between c and x","outside [c, x]","always at c","always at x"],a:0,e:"ξ نقطة مجهولة بين c و x."},
-{id:"t12",t:"tay",k:"mc",q:"Using three terms, e^0.2 ≈ 1 + x + x²/2 gives:",o:["1.22","1.2","1.2213","1.24"],a:0,e:"1 + 0.2 + 0.02 = 1.22."},
-{id:"t13",t:"tay",k:"tf",q:"If h is halved, an O(h³) error becomes about one eighth.",a:true,e:"(½)³ = ⅛."},
-{id:"t14",t:"tay",k:"tf",q:"The series for eˣ represents eˣ for every x.",a:true,e:"الباقي يروح للصفر لكل x."},
-
-{id:"f1",t:"flo",k:"mc",q:"Single precision uses an exponent bias of:",o:["1023","127","128","255"],a:1,e:"Single: 127. Double: 1023."},
-{id:"f2",t:"flo",k:"mc",q:"Double precision splits its 64 bits as (sign + exponent + fraction):",o:["1 + 11 + 52","1 + 8 + 23","1 + 10 + 53","1 + 12 + 51"],a:0,e:"Single: 1 + 8 + 23. Double: 1 + 11 + 52."},
-{id:"f3",t:"flo",k:"mc",q:"Machine epsilon in single precision is:",o:["2⁻²³","2⁻²⁴","2⁻⁵²","2⁻¹²⁷"],a:0,e:"Single epsilon 2⁻²³، و unit roundoff نصها 2⁻²⁴."},
-{id:"f4",t:"flo",k:"mc",q:"The unit roundoff in double precision is:",o:["2⁻⁵²","2⁻⁵³","2⁻²³","2⁻¹⁰²³"],a:1,e:"Double: epsilon 2⁻⁵² و unit roundoff 2⁻⁵³."},
-{id:"f5",t:"flo",k:"tf",q:"The number 0.1 can be stored exactly in binary.",a:false,e:"بالثنائي ما تخلص: 0.000110011…"},
-{id:"f6",t:"flo",k:"mc",q:"Overflow happens when a number is:",o:["larger than the largest storable value","closer to zero than the smallest storable value","negative","not normalized"],a:0,e:"الخيار الثاني هو Underflow."},
-{id:"f7",t:"flo",k:"mc",q:"The \"hole at zero\" is:",o:["the gap between 0 and the smallest positive machine number","the gap between 1 and the next machine number","the largest exponent","a rounding mode"],a:0,e:"الخيار الثاني هو machine epsilon."},
-{id:"f8",t:"flo",k:"mc",q:"Subtracting two nearly equal numbers causes:",o:["overflow","underflow","loss of significance","chopping"],a:2,e:"تضيع أغلب الخانات الصحيحة."},
-{id:"f9",t:"flo",k:"tf",q:"In single precision, the leading 1 of the normalized form 1.f is stored in the fraction field.",a:false,e:"ما ينخزن. نخزن اللي بعد الفاصلة بس."},
-{id:"f11",t:"flo",k:"mc",q:"A single-precision number is written with how many hex digits?",o:["8","16","4","32"],a:0,e:"32 bit ÷ 4 = 8. والـ Double 16."},
-{id:"f12",t:"flo",k:"mc",q:"2.5 in binary is:",o:["10.1","10.01","11.1","10.11"],a:0,e:"2 = 10، و 0.5 = 0.1."},
-{id:"f13",t:"flo",k:"mc",q:"The largest single-precision number is about:",o:["3.4 × 10³⁸","1.8 × 10³⁰⁸","2¹²⁷ exactly","10⁷"],a:0,e:"Single ≈ 3.4 × 10³⁸. Double ≈ 1.8 × 10³⁰⁸."},
-
-{id:"b1",t:"bis",k:"mc",q:"Bisection on [a, b] requires f continuous and:",o:["f(a)·f(b) < 0","f(a)·f(b) > 0","f′(a) ≠ 0","f(a) = f(b)"],a:0,e:"Intermediate Value Theorem: تغيّر الإشارة يضمن جذر."},
-{id:"b2",t:"bis",k:"tf",q:"If f(a)·f(b) > 0, then f has no root in [a, b].",a:false,e:"ممكن يكون فيه جذرين مثلاً. الشرط كافي مو لازم."},
-{id:"b3",t:"bis",k:"tf",q:"The Bisection method guarantees finding the exact root in a finite number of steps.",a:false,e:"ميد 472. تعطي تقريب."},
-{id:"b4",t:"bis",k:"mc",q:"The error of bisection after n steps is at most:",o:[F("b − a","2ⁿ"),F("b − a","2ⁿ⁺¹"),F("b − a","n"),"(b − a)²"],a:1,e:"ميد 472 كتبها بـ 2ⁿ وجوابها False. الصحيح 2ⁿ⁺¹."},
-{id:"b5",t:"bis",k:"mc",q:"f(x) = x² − 2 on [1, 2]. After the first bisection step the new interval is:",o:["[1, 1.5]","[1.5, 2]","[1, 2]","[1.25, 1.5]"],a:0,e:"c = 1.5، f(1.5) = 0.25 موجب، و f(1) = −1 سالب. الإشارة تتغير بين 1 و 1.5."},
-{id:"b6",t:"bis",k:"mc",q:"Bisection is also called:",o:["the binary-search method","Newton-Raphson","synthetic division","the secant method"],a:0,e:"Binary-search method."},
-{id:"b7",t:"bis",k:"mc",q:"Which describes bisection best?",o:["reliable but slow","fast but may diverge","needs f′","exact in one step"],a:0,e:"مضمونة بس بطيئة. السريعة اللي ممكن ما تتقارب هي Newton."},
-{id:"b8",t:"bis",k:"mc",q:"False position differs from bisection by using:",o:["where the chord between the ends crosses the x-axis","the midpoint","the tangent line","f′(x)"],a:0,e:"بدل المنتصف ياخذ تقاطع الخط بين الطرفين مع محور x."},
-
-{id:"n1",t:"new",k:"mc",q:"Newton's iteration is:",o:[`xₙ₊₁ = xₙ − ${F("f(xₙ)","f′(xₙ)")}`,`xₙ₊₁ = xₙ + ${F("f(xₙ)","f′(xₙ)")}`,`xₙ₊₁ = xₙ − ${F("f′(xₙ)","f(xₙ)")}`,`xₙ₊₁ = ${F("a + b","2")}`],a:0,e:"ناقص، والدالة فوق والمشتقة تحت."},
-{id:"n2",t:"new",k:"mc",q:"Near a simple root, Newton's method converges:",o:["quadratically","linearly","never","only with bisection"],a:0,e:"Quadratic convergence: الخانات الصحيحة تتضاعف تقريباً كل خطوة."},
-{id:"n3",t:"new",k:"tf",q:"Newton's method always converges for any starting point.",a:false,e:"لازم x₀ قريب من الجذر."},
-{id:"n4",t:"new",k:"tf",q:"Newton's method needs the derivative of the function.",a:true,e:"القانون فيه f′."},
-{id:"n5",t:"new",k:"mc",q:"f(x) = x² − 2, x₀ = 1. Newton gives x₁ =",o:["1.5","1.4167","2","0.5"],a:0,e:`f(x) = x² − 2 → f(1) = −1<br>f′(x) = 2x → f′(1) = 2<br>${M("x₁ = 1 − (−1) ÷ 2 = 1.5")}`},
-{id:"n7",t:"new",k:"mc",q:"Newton's formula comes from:",o:["the root of the tangent line","the midpoint of [a, b]","the chord between two points","Horner's algorithm"],a:0,e:"جذر خط المماس، أو أول حدين من Taylor."},
-{id:"n8",t:"new",k:"mc",q:"Newton's iteration should stop when:",o:["|εₐ| is below the tolerance or n exceeds n_max","f′(x) = 1","x becomes negative","after exactly 3 steps"],a:0,e:"الخطأ التقريبي أقل من المسموح، أو نتعدى عدد التكرارات."}
-];
 
 const $=id=>document.getElementById(id);
 const CK=k=>{const m=document.cookie.match(new RegExp("(?:^|; )"+k+"=([^;]*)"));return m?decodeURIComponent(m[1]):null};
@@ -180,8 +124,7 @@ const store={
   get(k){let v=null;try{v=localStorage.getItem(k)}catch(e){}if(!v)v=CK(k);try{return JSON.parse(v||"[]")}catch(e){return[]}},
   set(k,v){const j=JSON.stringify(v);try{localStorage.setItem(k,j)}catch(e){}try{document.cookie=k+"="+encodeURIComponent(j)+";max-age=31536000;path=/;SameSite=Lax"}catch(e){}}};
 const canStore=(()=>{try{localStorage.setItem("_t","1");const ok=localStorage.getItem("_t")==="1";localStorage.removeItem("_t");if(ok)return true}catch(e){}try{document.cookie="_t=1;path=/";return /(^|; )_t=1/.test(document.cookie)}catch(e){return false}})();
-const MKEY="quiz-math317-missed";
-let sel=new Set(Object.keys(TOPICS)),count=10,useMissed=false,list=[],i=0,right=0,wrong=[];
+let sel=new Set(),count=10,useMissed=false,list=[],i=0,right=0,wrong=[];
 function shuffle(a){a=a.slice();for(let j=a.length-1;j>0;j--){const r=Math.floor(Math.random()*(j+1));[a[j],a[r]]=[a[r],a[j]]}return a}
 function chip(txt,on,fn,cls=""){const b=document.createElement("button");b.className="chip "+cls;b.innerHTML=txt;b.setAttribute("aria-pressed",on);b.onclick=fn;return b}
 function drawSetup(){
@@ -234,7 +177,14 @@ function finish(){
 }
 $("retry").onclick=()=>start(shuffle(wrong));
 $("again").onclick=()=>{$("done").hidden=true;$("setup").hidden=false;drawSetup()};
-drawSetup();
+function boot(){
+  if(!QUIZ){$("setup").innerHTML='<p style="text-align:center;margin:0">الكويز غير متوفر</p>';return}
+  TOPICS=QUIZ.topics;BANK=QUIZ.bank;MKEY="quiz-"+QUIZ.id+"-missed";sel=new Set(Object.keys(TOPICS));
+  document.title="كويز "+QUIZ.code+" · محارب";
+  $("hcode").textContent=QUIZ.code;const bk=$("back");bk.href="./#"+QUIZ.id;bk.textContent="→ "+QUIZ.code;
+  drawSetup();
+}
+const ds=document.createElement("script");ds.src="quiz/"+CID+".js?v=3";ds.onload=boot;ds.onerror=boot;document.body.append(ds);
 </script>
 </body>
 </html>
