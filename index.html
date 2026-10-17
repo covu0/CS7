@@ -108,7 +108,7 @@ const SEC = {
  exa:{ico:"📝", ar:"الميدات السابقة", en:"Past midterms", d:{ar:"ميدات للتدريب، وتحليل وش يتكرر", en:"Midterms to practice on, and what repeats"}}
 };
 const COURSES = [
- {id:"math317", code:"MATH317", ico:"🧮", date:"2026-10-25", time:"12:15", name:{ar:"الطرق العددية", en:"Numerical Methods"},
+ {id:"math317", code:"MATH317", quiz:"quiz.html", ico:"🧮", date:"2026-10-25", time:"12:15", name:{ar:"الطرق العددية", en:"Numerical Methods"},
   scope:{ar:"نطاق الميد: المحاضرات 1 إلى 6", en:"Midterm scope: Lectures 1 to 6"},
   sections:[
    {k:"sum", files:[
@@ -241,7 +241,8 @@ function course(c){
   crumb.innerHTML = '<a class="crumb" href="#home">'+t.all+'</a>';
   app.innerHTML = head(c)+'<div class="secs">'+
   ["sum","pra","exa"].map(k=>{ const s = c.sections.find(x=>x.k===k), n = s ? s.files.length : 0, tag = n ? 'a' : 'div';
-    return '<'+tag+' class="sec s-'+k+(n?'':' off')+'"'+(n?' href="#'+c.id+'-'+k+'"':'')+'><span class="ico" aria-hidden="true">'+SEC[k].ico+'</span><span class="name">'+SEC[k][L]+'</span><span class="desc">'+SEC[k].d[L]+'</span><span class="pill'+(n?' on':'')+'">'+(n? t.files(n) : t.soon)+'</span></'+tag+'>'; }).join("")+'</div>';
+    return '<'+tag+' class="sec s-'+k+(n?'':' off')+'"'+(n?' href="#'+c.id+'-'+k+'"':'')+'><span class="ico" aria-hidden="true">'+SEC[k].ico+'</span><span class="name">'+SEC[k][L]+'</span><span class="desc">'+SEC[k].d[L]+'</span><span class="pill'+(n?' on':'')+'">'+(n? t.files(n) : t.soon)+'</span></'+tag+'>'; }).join("")+
+  (c.quiz ? '<a class="sec s-quiz" href="'+c.quiz+'"><span class="ico" aria-hidden="true">🎯</span><span class="name">'+(L==="ar"?"كويز":"Quiz")+'</span><span class="desc">'+(L==="ar"?"اختيارات وصح وخطأ مع الشرح":"Multiple choice and true/false with explanations")+'</span><span class="pill on">'+(L==="ar"?"ابدأ":"Start")+'</span></a>' : '')+'</div>';
 }
 function section(c, s){
   const t = T[L];
