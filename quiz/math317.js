@@ -22,7 +22,7 @@ QUIZ={id:"math317",code:"MATH317",topics:{ch1:"Errors &amp; Horner",tay:"Taylor"
 {id:"t5",t:"tay",k:"mc",q:"In terms of h, the remainder Eₙ₊₁ is:",o:["O(hⁿ)","O(hⁿ⁺¹)","O(h)","O(hⁿ⁻¹)"],a:1,e:"Eₙ₊₁ = O(hⁿ⁺¹)."},
 {id:"t7",t:"tay",k:"mc",q:"The Maclaurin series of e⁻ˣ starts with:",o:[`1 − x + ${F("x²","2")} − ${F("x³","6")}`,`1 + x + ${F("x²","2")} + ${F("x³","6")}`,`x − ${F("x³","6")} + ${F("x⁵","120")}`,`1 − ${F("x²","2")} + ${F("x⁴","24")}`],a:0,e:"نعوّض −x مكان x في سلسلة eˣ، فالإشارات تتناوب."},
 {id:"t8",t:"tay",k:"mc",q:"For an alternating series with terms decreasing to zero, the error after stopping is at most:",o:["the first omitted term","the last term used","the sum of all terms","zero"],a:0,e:"أول حد ما أخذناه."},
-{id:"t10",t:"tay",k:"mc",q:"The series for ln(1 + x) represents the function for:",o:["0 ≤ x ≤ 1","every x","x > 1 only","x < 0 only"],a:0,e:"لما x أكبر من 1 ما تتقارب."},
+{id:"t10",t:"tay",k:"mc",q:"The series for ln(1 + x) represents the function for:",o:["−1 < x ≤ 1","every x","x > 1 only","x ≤ −1 only"],a:0,e:"لما x أكبر من 1 ما تتقارب."},
 {id:"t11",t:"tay",k:"mc",q:"In the remainder term, ξ lies:",o:["between c and x","outside [c, x]","always at c","always at x"],a:0,e:"ξ نقطة مجهولة بين c و x."},
 {id:"t12",t:"tay",k:"mc",q:"Using three terms, e^0.2 ≈ 1 + x + x²/2 gives:",o:["1.22","1.2","1.2213","1.24"],a:0,e:"1 + 0.2 + 0.02 = 1.22."},
 {id:"t13",t:"tay",k:"tf",q:"If h is halved, an O(h³) error becomes about one eighth.",a:true,e:"(½)³ = ⅛."},
