@@ -99,8 +99,8 @@ footer{margin-top:64px;text-align:center;color:var(--faint);font-size:.8rem}
 <script>
 // كل نص له نسخة عربية وإنجليزية. الملفات: f = اسم الملف داخل مجلد اللغة، sol = ملف الحل (اختياري)، وإذا ما له نسخة إنجليزية نحط only:"ar". عدد الصفحات في PG.
 const T = {
- ar:{lab:"LEVEL 7 · COMPUTER SCIENCE", h1:'ملخصات <em>الميد</em>', sub:"كل مادة، وكل محاضرة في ملف لحالها", courses:"المواد", days:"يوم على أقرب ميد", open:"افتح المادة", at:"الساعة", exam:"الميد", left:n=>n>1?"باقي <b>"+n+"</b> يوم":n===1?"بكرة":n===0?"اليوم":"انتهى", ready:n=>n+" ملف جاهز", soon:"قريباً", all:"→ كل المواد", pages:"صفحة", only:"عربي فقط", sol:"الحل", chev:"‹", files:n=>n+" ملف", choose:"اختر القسم", backto:"→ ", sig:"محارب", foot:"محارب · المستوى السابع · علوم الحاسب", soonmore:"باقي الأقسام قريباً."},
- en:{lab:"LEVEL 7 · COMPUTER SCIENCE", h1:'Midterm <em>Notes</em>', sub:"Every course, one file per lecture", courses:"Courses", days:"days to the nearest midterm", open:"Open course", at:"at", exam:"Midterm", left:n=>n>1?"<b>"+n+"</b> days left":n===1?"tomorrow":n===0?"today":"finished", ready:n=>n+" files ready", soon:"Coming soon", all:"← All courses", pages:"pages", only:"Arabic only", sol:"Solutions", chev:"›", files:n=>n+(n===1?" file":" files"), choose:"Choose a section", backto:"← ", sig:"Muharib", foot:"Muharib · Level 7 · Computer Science", soonmore:"More sections coming soon."}
+ ar:{lab:"LEVEL 7 · COMPUTER SCIENCE", h1:'ملخصات <em>الميد</em>', sub:"كل مادة، وكل محاضرة في ملف لحالها", courses:"المواد", days:"يوم على أقرب ميد", open:"افتح المادة", at:"الساعة", exam:"الميد", left:n=>n>1?"باقي <b>"+n+"</b> يوم":n===1?"بكرة":n===0?"اليوم":"انتهى", ready:n=>n+" ملف جاهز", soon:"قريباً", all:"→ كل المواد", pages:"صفحة", only:"عربي فقط", sol:"الحل", chev:"‹", files:n=>n+" ملف", choose:"اختر القسم", backto:"→ ", sig:"محارب", foot:"محارب · المستوى السابع · علوم الحاسب", soonmore:"باقي الأقسام قريباً.", post:"تأجّل، الموعد الجديد لاحقاً"},
+ en:{lab:"LEVEL 7 · COMPUTER SCIENCE", h1:'Midterm <em>Notes</em>', sub:"Every course, one file per lecture", courses:"Courses", days:"days to the nearest midterm", open:"Open course", at:"at", exam:"Midterm", left:n=>n>1?"<b>"+n+"</b> days left":n===1?"tomorrow":n===0?"today":"finished", ready:n=>n+" files ready", soon:"Coming soon", all:"← All courses", pages:"pages", only:"Arabic only", sol:"Solutions", chev:"›", files:n=>n+(n===1?" file":" files"), choose:"Choose a section", backto:"← ", sig:"Muharib", foot:"Muharib · Level 7 · Computer Science", soonmore:"More sections coming soon.", post:"postponed, new date to be announced"}
 };
 const SEC = {
  sum:{ico:"📘", ar:"الملخصات", en:"Summaries", d:{ar:"شرح كل محاضرة في ملف لحالها", en:"Each lecture explained in its own file"}},
@@ -108,7 +108,7 @@ const SEC = {
  exa:{ico:"📝", ar:"الميدات السابقة", en:"Past midterms", d:{ar:"ميدات للتدريب، وتحليل وش يتكرر", en:"Midterms to practice on, and what repeats"}}
 };
 const COURSES = [
- {id:"math317", code:"MATH317", quiz:"quiz.html?c=math317", ico:"🧮", date:"2026-10-25", time:"12:15", name:{ar:"الطرق العددية", en:"Numerical Methods"},
+ {id:"math317", code:"MATH317", post:true, quiz:"quiz.html?c=math317", ico:"🧮", date:"2026-10-25", time:"12:15", name:{ar:"الطرق العددية", en:"Numerical Methods"},
   scope:{ar:"نطاق الميد: المحاضرات 1 إلى 6", en:"Midterm scope: Lectures 1 to 6"},
   sections:[
    {k:"sum", files:[
@@ -225,13 +225,13 @@ function dm(d){ const p=d.split("-"); return (+p[2])+"/"+(+p[1]); }
 const count = c => c.sections.reduce((a,s)=>a+s.files.length,0);
 function home(){
   const t = T[L]; crumb.innerHTML = "";
-  const up = COURSES.filter(c=>days(c.date)>=0).sort((a,b)=>a.date<b.date?-1:1)[0];
+  const up = COURSES.filter(c=>!c.post&&days(c.date)>=0).sort((a,b)=>a.date<b.date?-1:1)[0];
   app.innerHTML =
   '<div class="head"><div class="lab">'+t.lab+'</div><h1>'+t.h1+'</h1><div class="sig">'+t.sig+'</div></div>'+
   (up? '<div class="next"><div class="big">'+days(up.date)+'</div><div class="t"><b>'+t.days+': '+up.name[L]+'</b><span>'+dm(up.date)+' · '+t.at+' '+up.time+'</span></div>'+(count(up)?'<a href="#'+up.id+'">'+t.open+'</a>':'')+'</div>' : '')+
   '<div class="strip">'+t.courses+'</div><div class="grid">'+
   COURSES.map(c=>{ const n=count(c), tag=n?'a':'div';
-    return '<'+tag+' class="course'+(n?'':' off')+'"'+(n?' href="#'+c.id+'"':'')+'><div class="row"><span class="ico" aria-hidden="true">'+c.ico+'</span><span class="n">'+c.code+'</span></div><div class="name">'+c.name[L]+'</div><div class="meta">'+t.exam+' '+dm(c.date)+' · '+t.left(days(c.date))+'</div><span class="pill'+(n?' on':'')+'">'+(n? t.ready(n):t.soon)+'</span></'+tag+'>'; }).join("")+'</div>';
+    return '<'+tag+' class="course'+(n?'':' off')+'"'+(n?' href="#'+c.id+'"':'')+'><div class="row"><span class="ico" aria-hidden="true">'+c.ico+'</span><span class="n">'+c.code+'</span></div><div class="name">'+c.name[L]+'</div><div class="meta">'+(c.post? t.exam+' '+t.post : t.exam+' '+dm(c.date)+' · '+t.left(days(c.date)))+'</div><span class="pill'+(n?' on':'')+'">'+(n? t.ready(n):t.soon)+'</span></'+tag+'>'; }).join("")+'</div>';
 }
 function head(c){
   const t = T[L];
