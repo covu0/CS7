@@ -108,27 +108,6 @@ const SEC = {
  exa:{ico:"📝", ar:"الميدات السابقة", en:"Past midterms", d:{ar:"ميدات للتدريب، وتحليل وش يتكرر", en:"Midterms to practice on, and what repeats"}}
 };
 const COURSES = [
- {id:"math317", code:"MATH317", post:true, quiz:"quiz.html?c=math317", ico:"🧮", date:"2026-10-25", time:"12:15", name:{ar:"الطرق العددية", en:"Numerical Methods"},
-  scope:{ar:"نطاق الميد: المحاضرات 1 إلى 6", en:"Midterm scope: Lectures 1 to 6"},
-  sections:[
-   {k:"sum", files:[
-    {f:"ch1-1-preliminary-remarks.pdf", t:"Chapter 1.1 · Preliminary Remarks", d:{ar:"الأخطاء، Rounding، Horner", en:"Errors, rounding, Horner"}},
-    {f:"ch1-2-taylor-series.pdf", t:"Chapter 1.2 · Taylor Series", d:{ar:"السلاسل، Complete Horner، الباقي", en:"Series, complete Horner, remainder"}},
-    {f:"ch2-floating-point.pdf", t:"Chapter 2 · Floating-Point", d:{ar:"Single و Double، التحويل إلى Hex", en:"Single and double, conversion to hex"}},
-    {f:"ch3-1-bisection.pdf", t:"Chapter 3.1 · Bisection Method", d:{ar:"Bisection و False Position", en:"Bisection and false position"}},
-    {f:"ch3-2-newton.pdf", t:"Chapter 3.2 · Newton's Method", d:{ar:"القانون، التقارب، متى نوقف", en:"Formula, convergence, stopping"}},
-    {f:"theory-review.pdf", t:"Theory Review", d:{ar:"النظري كله: صح وخطأ وتعريفات", en:"All theory: true/false and definitions"}}]},
-   {k:"pra", files:[
-    {f:"homework-1.pdf", sol:"homework-1-solutions.pdf", t:"Homework 1", d:{ar:"تدريب: الأخطاء، Taylor، Horner", en:"Practice: errors, Taylor, Horner"}},
-    {f:"homework-2.pdf", sol:"homework-2-solutions.pdf", t:"Homework 2", d:{ar:"تدريب: Floating-point", en:"Practice: floating-point"}},
-    {f:"mock-midterm.pdf", sol:"mock-midterm-solutions.pdf", t:"Mock Midterm", d:{ar:"اختبار تجريبي بشكل الميد", en:"A practice exam in the midterm's format"}}]},
-   {k:"exa", files:[
-    {f:"what-repeats.pdf", t:{ar:"وش يتكرر في الميد", en:"What repeats in the midterm"}, d:{ar:"تحليل أربع ميدات", en:"Analysis of four midterms"}},
-    {f:"midterm-472.pdf", sol:"midterm-472-solutions.pdf", t:"Midterm 472", d:{ar:"تدريب · 12/04/2026", en:"Practice · 12/04/2026"}},
-    {f:"midterm-471.pdf", sol:"midterm-471-solutions.pdf", t:"Midterm 471", d:{ar:"تدريب · 20/10/2025", en:"Practice · 20/10/2025"}},
-    {f:"midterm-462.pdf", sol:"midterm-462-solutions.pdf", t:"Midterm 462", d:{ar:"تدريب · 18/03/2025", en:"Practice · 18/03/2025"}},
-    {f:"midterm-461.pdf", sol:"midterm-461-solutions.pdf", t:"Midterm 461", d:{ar:"تدريب · 2024", en:"Practice · 2024"}}]}
-  ]},
  {id:"cs383", code:"CS383", quiz:"quiz.html?c=cs383", ico:"🧩", date:"2026-10-27", time:"1:30", name:{ar:"هندسة البرمجيات", en:"Software Engineering"},
   scope:{ar:"نطاق الميد: المحاضرات 1 إلى 8", en:"Midterm scope: Lectures 1 to 8"},
   sections:[{k:"sum", files:[
@@ -211,6 +190,27 @@ const COURSES = [
     {f:"midterm-461.pdf", sol:"midterm-461-solutions.pdf", t:"Midterm 461", d:{ar:"تدريب · 25 درجة", en:"Practice · 25 marks"}},
     {f:"midterm-451.pdf", sol:"midterm-451-solutions.pdf", t:"Midterm 451", d:{ar:"تدريب · 30/10/2023", en:"Practice · 30/10/2023"}},
     {f:"midterm-442.pdf", sol:"midterm-442-solutions.pdf", t:"Midterm 442", d:{ar:"تدريب · 12/01/2023 · منهج قديم", en:"Practice · 12/01/2023 · older syllabus"}}]}
+  ]},
+ {id:"math317", code:"MATH317", post:true, quiz:"quiz.html?c=math317", ico:"🧮", date:"2026-10-25", time:"12:15", name:{ar:"الطرق العددية", en:"Numerical Methods"},
+  scope:{ar:"نطاق الميد: المحاضرات 1 إلى 6", en:"Midterm scope: Lectures 1 to 6"},
+  sections:[
+   {k:"sum", files:[
+    {f:"ch1-1-preliminary-remarks.pdf", t:"Chapter 1.1 · Preliminary Remarks", d:{ar:"الأخطاء، Rounding، Horner", en:"Errors, rounding, Horner"}},
+    {f:"ch1-2-taylor-series.pdf", t:"Chapter 1.2 · Taylor Series", d:{ar:"السلاسل، Complete Horner، الباقي", en:"Series, complete Horner, remainder"}},
+    {f:"ch2-floating-point.pdf", t:"Chapter 2 · Floating-Point", d:{ar:"Single و Double، التحويل إلى Hex", en:"Single and double, conversion to hex"}},
+    {f:"ch3-1-bisection.pdf", t:"Chapter 3.1 · Bisection Method", d:{ar:"Bisection و False Position", en:"Bisection and false position"}},
+    {f:"ch3-2-newton.pdf", t:"Chapter 3.2 · Newton's Method", d:{ar:"القانون، التقارب، متى نوقف", en:"Formula, convergence, stopping"}},
+    {f:"theory-review.pdf", t:"Theory Review", d:{ar:"النظري كله: صح وخطأ وتعريفات", en:"All theory: true/false and definitions"}}]},
+   {k:"pra", files:[
+    {f:"homework-1.pdf", sol:"homework-1-solutions.pdf", t:"Homework 1", d:{ar:"تدريب: الأخطاء، Taylor، Horner", en:"Practice: errors, Taylor, Horner"}},
+    {f:"homework-2.pdf", sol:"homework-2-solutions.pdf", t:"Homework 2", d:{ar:"تدريب: Floating-point", en:"Practice: floating-point"}},
+    {f:"mock-midterm.pdf", sol:"mock-midterm-solutions.pdf", t:"Mock Midterm", d:{ar:"اختبار تجريبي بشكل الميد", en:"A practice exam in the midterm's format"}}]},
+   {k:"exa", files:[
+    {f:"what-repeats.pdf", t:{ar:"وش يتكرر في الميد", en:"What repeats in the midterm"}, d:{ar:"تحليل أربع ميدات", en:"Analysis of four midterms"}},
+    {f:"midterm-472.pdf", sol:"midterm-472-solutions.pdf", t:"Midterm 472", d:{ar:"تدريب · 12/04/2026", en:"Practice · 12/04/2026"}},
+    {f:"midterm-471.pdf", sol:"midterm-471-solutions.pdf", t:"Midterm 471", d:{ar:"تدريب · 20/10/2025", en:"Practice · 20/10/2025"}},
+    {f:"midterm-462.pdf", sol:"midterm-462-solutions.pdf", t:"Midterm 462", d:{ar:"تدريب · 18/03/2025", en:"Practice · 18/03/2025"}},
+    {f:"midterm-461.pdf", sol:"midterm-461-solutions.pdf", t:"Midterm 461", d:{ar:"تدريب · 2024", en:"Practice · 2024"}}]}
   ]},
  {id:"cs342", code:"CS342", ico:"🖥️", date:"2026-11-08", time:"11:00", name:{ar:"البرمجة المرئية", en:"Visual Programming"}, sections:[]}
 ];
