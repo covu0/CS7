@@ -73,7 +73,16 @@ button{font:inherit;cursor:pointer;color:inherit}
 .fr>span:first-child{border-bottom:1px solid currentColor;padding:0 3px}
 .score{text-align:center;padding:10px 0 4px}
 .score .big{font-family:var(--mono);font-size:3.2rem;font-weight:600;color:var(--gold);line-height:1.1;direction:ltr}
-.score p{color:var(--muted);margin:6px 0 0}
+.score p{color:var(--ink);margin:10px 0 0;font-weight:500}
+.score .pct{font-family:var(--mono);color:var(--muted);font-size:.95rem;direction:ltr}
+.track{height:6px;border-radius:6px;background:var(--line);margin:10px auto 0;max-width:260px;overflow:hidden}
+.track i{display:block;height:100%;width:0;background:var(--acc);border-radius:6px;transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.full .track i{background:var(--gold)}
+.full .big{animation:pop .7s cubic-bezier(.2,1.6,.4,1) .45s both}
+@keyframes pop{0%{transform:scale(.85)}60%{transform:scale(1.12)}100%{transform:scale(1)}}
+.tops .weak span{color:var(--bad)}
+#cf{position:fixed;inset:0;pointer-events:none;z-index:50}
+@media (prefers-reduced-motion:reduce){.track i{transition:none}.full .big{animation:none}}
 .tops{margin:18px 0 6px;display:flex;flex-direction:column;gap:8px}
 .tops div{display:flex;justify-content:space-between;gap:10px;font-size:.93rem;border-bottom:1px solid var(--line);padding-bottom:6px}
 .tops span:last-child{font-family:var(--mono);direction:ltr}
@@ -116,7 +125,7 @@ html[lang="en"] .ex,html[lang="en"] .lbl,html[lang="en"] .miss h3{text-align:lef
 </section>
 
 <section id="done" class="box" hidden>
-<div class="score"><div class="big" id="sc"></div><p id="scMsg"></p></div>
+<div class="score"><div class="big" id="sc"></div><div class="pct" id="pct"></div><div class="track"><i id="bar"></i></div><p id="scMsg"></p></div>
 <div class="tops" id="tops"></div>
 <button class="go" id="retry" data-t="retry"></button>
 <button class="ghost" id="again" data-t="again"></button>
@@ -136,11 +145,11 @@ const S={
  ar:{quiz:"كويز",sub:"اختيارات وصح وخطأ من الملخصات والميدات",topics:"المواضيع",count:"عدد الأسئلة",all:"الكل",start:"ابدأ",miss:n=>`راجع أخطاء آخر كويز (${n})`,
   nostore:"متصفحك ما يسمح بحفظ الأخطاء (غالباً تصفح خاص). الكويز يشتغل عادي بس الأخطاء تنمسح لما تحدّث.",tf:" · صح وخطأ",ok:"صح",no:"غلط",next:"التالي",result:"النتيجة",
   retry:"أعد الأسئلة اللي غلطت فيها",again:"كويز جديد",wrong:"اللي غلطت فيه",na:"الكويز غير متوفر",
-  msg:p=>p===1?"فل مارك":p>=.8?"ممتاز، راجع اللي غلطت فيه":p>=.5?"زين، بس راجع الغلط":"ارجع للملخص وبعدها عيد"},
+  msg:(p,w)=>{const e=w===1?"غلطة وحدة":w===2?"غلطتين":w+" أغلاط";return p===1?["فل مارك 🏆 ما شاء الله عليك","كاملة 🔥 ولا غلطة"]:p>=.9?[`قربت مرة، باقي ${e} بس`,`${e} وتصير فل مارك، راجعها`]:p>=.75?[`ممتاز 👏 باقي ${e} وتضبط`,`مستواك قوي، راجع ${e} وتصير فل`]:p>=.5?["فوق النص 👍 ركّز على المواضيع الحمراء","الأساس عندك، راجع أغلاطك تحت"]:p>=.25?["تحتاج مراجعة، شوف أغلاطك تحت وعيد","ارجع للملخص في المواضيع الحمراء وعيد"]:["لا تشيل هم، ارجع للملخص وعيد الكويز","البداية دايم كذا، اقرأ الملخص وارجع"]}},
  en:{quiz:"Quiz",sub:"Multiple choice and true/false from the notes and past midterms",topics:"Topics",count:"Number of questions",all:"All",start:"Start",miss:n=>`Review mistakes from my last quiz (${n})`,
   nostore:"Your browser does not allow saving mistakes (probably private browsing). The quiz still works, but mistakes are cleared on refresh.",tf:" · True/False",ok:"Correct",no:"Wrong",next:"Next",result:"Result",
   retry:"Retry the questions I got wrong",again:"New quiz",wrong:"What I got wrong",na:"Quiz not available",
-  msg:p=>p===1?"Full marks":p>=.8?"Excellent, review the ones you missed":p>=.5?"Good, but review your mistakes":"Go back to the notes, then try again"}};
+  msg:(p,w)=>{const e=w===1?"one mistake":w+" mistakes";return p===1?["Full marks 🏆","Perfect 🔥 not a single mistake"]:p>=.9?[`So close, only ${e} left`,`Fix ${e} and it's full marks`]:p>=.75?[`Excellent 👏 review the ${e}`,`Strong result, only ${e} left`]:p>=.5?["Above half 👍 focus on the red topics","The basics are there, review your mistakes below"]:p>=.25?["Needs review, check your mistakes below and retry","Go back to the notes for the red topics and retry"]:["No worries, go back to the notes and retry","Every start looks like this, read the notes and come back"]}}};
 let L="ar";try{const v=localStorage.getItem("lang");if(v==="en"||v==="ar")L=v}catch(e){}
 const t=k=>S[L][k];
 const EX=q=>L==="en"&&QUIZ.ee&&QUIZ.ee[q.id]?QUIZ.ee[q.id]:q.e;
@@ -190,13 +199,23 @@ function drawEx(){const q=list[i],ex=$("ex");ex.className="ex "+(answered==="ok"
   $("next").textContent=i===list.length-1?t("result"):t("next")}
 $("next").onclick=()=>{i++;if(i<list.length)show();else finish()};
 function ansText(q){return q.k==="tf"?(q.a?"True":"False"):q.o[q.a]}
+function confetti(){const c=document.createElement("canvas");c.id="cf";document.body.appendChild(c);const x=c.getContext("2d"),d=devicePixelRatio||1,W=innerWidth,H=innerHeight;c.width=W*d;c.height=H*d;x.scale(d,d);
+  const cs=getComputedStyle(document.documentElement),col=["--gold","--acc","--ok"].map(v=>cs.getPropertyValue(v).trim());
+  const ps=Array.from({length:70},()=>({x:W/2+(Math.random()-.5)*60,y:H*.32,vx:(Math.random()-.5)*9,vy:-Math.random()*9-4,r:Math.random()*6.28,vr:(Math.random()-.5)*.3,w:5+Math.random()*5,h:3+Math.random()*4,c:col[Math.floor(Math.random()*3)]}));
+  const t0=performance.now();(function f(n){const e=n-t0;x.clearRect(0,0,W,H);x.globalAlpha=Math.max(0,1-Math.max(0,e-1800)/900);
+  ps.forEach(q=>{q.vy+=.22;q.vx*=.99;q.x+=q.vx;q.y+=q.vy;q.r+=q.vr;x.save();x.translate(q.x,q.y);x.rotate(q.r);x.fillStyle=q.c;x.fillRect(-q.w/2,-q.h/2,q.w,q.h);x.restore()});
+  if(e<2700)requestAnimationFrame(f);else c.remove()})(t0)}
 function finish(){$("play").hidden=true;$("done").hidden=false;renderDone()}
 function renderDone(){
-  $("sc").textContent=`${right} / ${list.length}`;
-  const p=right/list.length;
-  $("scMsg").textContent=t("msg")(p);
+  const n=list.length,p=right/n,pc=Math.round(p*100),m=t("msg")(p,n-right),calm=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  $("scMsg").textContent=m[Math.floor(Math.random()*m.length)];
+  $("pct").textContent=pc+"%";$("bar").style.width="0";$("done").classList.toggle("full",p===1);
+  if(calm){$("sc").textContent=`${right} / ${n}`;$("bar").style.width=pc+"%"}
+  else{let k=0;$("sc").textContent=`0 / ${n}`;const st=setInterval(()=>{k++;if(k>=right){k=right;clearInterval(st)}$("sc").textContent=`${k} / ${n}`},Math.max(25,Math.min(80,900/Math.max(right,1))));if(!right)clearInterval(st);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>$("bar").style.width=pc+"%"))}
+  if(p===1&&!calm)setTimeout(confetti,500);
   const by={};list.forEach(q=>{by[q.t]=by[q.t]||[0,0];by[q.t][1]++});list.forEach(q=>{if(!wrong.includes(q))by[q.t][0]++});
-  $("tops").innerHTML=Object.keys(by).map(k=>`<div><span>${TOPICS[k]}</span><span>${by[k][0]} / ${by[k][1]}</span></div>`).join("");
+  $("tops").innerHTML=Object.keys(by).map(k=>`<div${by[k][0]/by[k][1]<.5?' class="weak"':''}><span>${TOPICS[k]}</span><span>${by[k][0]} / ${by[k][1]}</span></div>`).join("");
   $("retry").hidden=!wrong.length;
   $("miss").innerHTML=wrong.length?`<h3>${t("wrong")}</h3>`+wrong.map(q=>`<div class="mi"><p class="q">${q.q}</p><div class="ans">✓ ${ansText(q)}</div><div class="ex">${EX(q)}</div></div>`).join(""):"";
 }
