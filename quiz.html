@@ -162,7 +162,7 @@ const store={
   get(k){let v=null;try{v=localStorage.getItem(k)}catch(e){}if(!v)v=CK(k);try{return JSON.parse(v||"[]")}catch(e){return[]}},
   set(k,v){const j=JSON.stringify(v);try{localStorage.setItem(k,j)}catch(e){}try{document.cookie=k+"="+encodeURIComponent(j)+";max-age=31536000;path=/;SameSite=Lax"}catch(e){}}};
 const canStore=(()=>{try{localStorage.setItem("_t","1");const ok=localStorage.getItem("_t")==="1";localStorage.removeItem("_t");if(ok)return true}catch(e){}try{document.cookie="_t=1;path=/";return /(^|; )_t=1/.test(document.cookie)}catch(e){return false}})();
-let sel=new Set(),selM=new Set(),count=10,useMissed=false,list=[],i=0,right=0,wrong=[];
+let sel=new Set(),selM=new Set(),count=0,useMissed=false,list=[],i=0,right=0,wrong=[];
 function shuffle(a){a=a.slice();for(let j=a.length-1;j>0;j--){const r=Math.floor(Math.random()*(j+1));[a[j],a[r]]=[a[r],a[j]]}return a}
 function chip(txt,on,fn,cls=""){const b=document.createElement("button");b.className="chip "+cls;b.innerHTML=txt;b.setAttribute("aria-pressed",on);b.onclick=fn;return b}
 function drawSetup(){
