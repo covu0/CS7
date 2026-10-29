@@ -238,7 +238,7 @@ function dm(d){ const p=d.split("-"); return (+p[2])+"/"+(+p[1]); }
 const count = c => c.sections.reduce((a,s)=>a+s.files.length,0);
 function home(){
   const t = T[L]; crumb.innerHTML = "";
-  const up = COURSES.filter(c=>!c.post&&days(c.date)>=0).sort((a,b)=>a.date<b.date?-1:1)[0];
+  const up = COURSES.filter(c=>!c.post&&!c.done&&days(c.date)>=0).sort((a,b)=>a.date<b.date?-1:1)[0];
   app.innerHTML =
   '<div class="head"><div class="lab">'+t.lab+'</div><h1>'+t.h1+'</h1><div class="sig">'+t.sig+'</div></div>'+
   (up? '<div class="next"><div class="big">'+days(up.date)+'</div><div class="t"><b>'+t.days+': '+up.name[L]+'</b><span>'+dm(up.date)+' · '+t.at+' '+up.time+'</span></div>'+(count(up)?'<a href="#'+up.id+'">'+t.open+'</a>':'')+'</div>' : '')+
