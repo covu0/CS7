@@ -59,8 +59,7 @@ button{font:inherit;cursor:pointer}
 .course{display:flex;flex-direction:column;gap:6px;border:1px solid var(--line);border-radius:18px;padding:22px 22px 20px;background:var(--card);transition:border-color .18s,transform .18s;min-width:0}
 a.course:hover{border-color:var(--acc);transform:translateY(-2px)}
 .course .row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
-.course .ico{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;background:var(--soft);color:var(--acc)}.course .ico svg{width:20px;height:20px}
-.ico svg{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;display:block}
+.course .ico{display:inline-flex;width:42px;height:42px}.ico img{width:100%;height:100%;display:block;object-fit:contain}
 .course .name{font-weight:600;font-size:1.22rem;line-height:1.5}
 .course .meta{color:var(--muted);font-size:.88rem}
 .course .meta b{font-weight:600;color:var(--ink)}
@@ -74,7 +73,7 @@ a.course:hover{border-color:var(--acc);transform:translateY(-2px)}
 .secs{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
 .sec{display:flex;flex-direction:column;align-items:flex-start;gap:4px;border:1px solid var(--line);border-radius:18px;padding:24px 22px 20px;background:var(--card);transition:border-color .18s,transform .18s;min-width:0}
 a.sec:hover{border-color:var(--acc);transform:translateY(-2px)}
-.sec .ico,.sechead .ico{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:13px;background:var(--soft);color:var(--acc);flex:none}.sec .ico svg,.sechead .ico svg{width:22px;height:22px}
+.sec .ico,.sechead .ico{display:inline-flex;align-items:center;justify-content:center;width:52px;height:52px;flex:none}
 .sec .ico{margin-bottom:12px}
 .sec .name{font-weight:600;font-size:1.22rem;line-height:1.5}
 .sec .desc{color:var(--muted);font-size:.88rem;line-height:1.75;flex:1}
@@ -112,15 +111,14 @@ const T = {
  ar:{lab:"LEVEL 7 · COMPUTER SCIENCE", h1:'ملخصات <em>الميد</em>', sub:"كل مادة، وكل محاضرة في ملف لحالها", courses:"المواد", days:"يوم على أقرب ميد", open:"افتح المادة", at:"الساعة", exam:"الميد", left:n=>n>1?"باقي <b>"+n+"</b> يوم":n===1?"بكرة":n===0?"اليوم":"انتهى", ready:n=>n+" ملف جاهز", soon:"قريباً", all:"→ كل المواد", pages:"صفحة", only:"عربي فقط", sol:"الحل", chev:"‹", files:n=>n+" ملف", choose:"اختر القسم", backto:"→ ", sig:"محارب", foot:"محارب · المستوى السابع · علوم الحاسب", soonmore:"باقي الأقسام قريباً.", post:"تأجّل، الموعد الجديد لاحقاً"},
  en:{lab:"LEVEL 7 · COMPUTER SCIENCE", h1:'Midterm <em>Notes</em>', sub:"Every course, one file per lecture", courses:"Courses", days:"days to the nearest midterm", open:"Open course", at:"at", exam:"Midterm", left:n=>n>1?"<b>"+n+"</b> days left":n===1?"tomorrow":n===0?"today":"finished", ready:n=>n+" files ready", soon:"Coming soon", all:"← All courses", pages:"pages", only:"Arabic only", sol:"Solutions", chev:"›", files:n=>n+(n===1?" file":" files"), choose:"Choose a section", backto:"← ", sig:"Muharib", foot:"Muharib · Level 7 · Computer Science", soonmore:"More sections coming soon.", post:"postponed, new date to be announced"}
 };
-const ICO={"book": "<path d=\"M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z\"/><path d=\"M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z\"/>", "pen": "<path d=\"M12 20h9\"/><path d=\"M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z\"/>", "file": "<path d=\"M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5z\"/><path d=\"M14 2v6h6\"/><path d=\"M16 13H8M16 17H8M10 9H8\"/>", "target": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><circle cx=\"12\" cy=\"12\" r=\"5\"/><circle cx=\"12\" cy=\"12\" r=\"1.5\"/>", "cg": "<path d=\"m12 19 7-7 3 3-7 7z\"/><path d=\"m18 13-1.5-7.5L2 2l3.5 14.5L13 18z\"/><path d=\"m2 2 7.6 7.6\"/><circle cx=\"11\" cy=\"11\" r=\"2\"/>", "alg": "<circle cx=\"12\" cy=\"5\" r=\"2.5\"/><circle cx=\"5\" cy=\"19\" r=\"2.5\"/><circle cx=\"19\" cy=\"19\" r=\"2.5\"/><path d=\"M10.6 7.1 6.4 16.9M13.4 7.1l4.2 9.8\"/>", "num": "<path d=\"M18 7V4H6l6 8-6 8h12v-3\"/>", "vis": "<rect x=\"2\" y=\"3\" width=\"20\" height=\"14\" rx=\"2\"/><path d=\"M8 21h8M12 17v4M2 8h20\"/>", "se": "<path d=\"M12 2 2 7l10 5 10-5z\"/><path d=\"m2 17 10 5 10-5\"/><path d=\"m2 12 10 5 10-5\"/>", "or": "<path d=\"m22 7-8.5 8.5-5-5L2 17\"/><path d=\"M16 7h6v6\"/>"};
-const svg=k=>'<svg viewBox="0 0 24 24">'+ICO[k]+'</svg>';
+const svg=k=>'<img src="img/'+k+'.webp" alt="" width="64" height="64" decoding="async">';
 const SEC = {
- sum:{ico:"book", ar:"الملخصات", en:"Summaries", d:{ar:"شرح كل محاضرة في ملف لحالها", en:"Each lecture explained in its own file"}},
- pra:{ico:"pen", ar:"التدريبات", en:"Practice", d:{ar:"واجبات واختبار تجريبي، والحل في ملف منفصل", en:"Homework and a mock exam, with solutions in separate files"}},
- exa:{ico:"file", ar:"الميدات السابقة", en:"Past midterms", d:{ar:"ميدات للتدريب، وتحليل وش يتكرر", en:"Midterms to practice on, and what repeats"}}
+ sum:{ico:"1f4da", ar:"الملخصات", en:"Summaries", d:{ar:"شرح كل محاضرة في ملف لحالها", en:"Each lecture explained in its own file"}},
+ pra:{ico:"270f-fe0f", ar:"التدريبات", en:"Practice", d:{ar:"واجبات واختبار تجريبي، والحل في ملف منفصل", en:"Homework and a mock exam, with solutions in separate files"}},
+ exa:{ico:"1f4dd", ar:"الميدات السابقة", en:"Past midterms", d:{ar:"ميدات للتدريب، وتحليل وش يتكرر", en:"Midterms to practice on, and what repeats"}}
 };
 const COURSES = [
- {id:"cs341", code:"CS341", ico:"cg", date:"2026-11-02", time:"12:15", name:{ar:"الرسم بالحاسب", en:"Computer Graphics"},
+ {id:"cs341", code:"CS341", quiz:"quiz.html?c=cs341", ico:"1f3a8", date:"2026-11-02", time:"12:15", name:{ar:"الرسم بالحاسب", en:"Computer Graphics"},
   scope:{ar:"نطاق الميد: Introduction، Chapter 1، Chapter 2، Output Primitives لين DDA", en:"Midterm scope: Introduction, Chapter 1, Chapter 2, Output Primitives up to DDA"},
   sections:[
    {k:"sum", files:[
@@ -139,7 +137,7 @@ const COURSES = [
     {f:"midterm-462.pdf", sol:"midterm-462-solutions.pdf", t:"Midterm 462", d:{ar:"تدريب · 20 درجة", en:"Practice · 20 marks"}},
     {f:"midterm-461.pdf", sol:"midterm-461-solutions.pdf", t:"Midterm 461", d:{ar:"تدريب · 20 درجة", en:"Practice · 20 marks"}}]}
   ]},
- {id:"cs315", code:"CS315", quiz:"quiz.html?c=cs315", ico:"alg", date:"2026-11-04", time:"11:00", name:{ar:"تحليل وتصميم الخوارزميات", en:"Algorithms Analysis & Design"},
+ {id:"cs315", code:"CS315", quiz:"quiz.html?c=cs315", ico:"1f9e0", date:"2026-11-04", time:"11:00", name:{ar:"تحليل وتصميم الخوارزميات", en:"Algorithms Analysis & Design"},
   scope:{ar:"نطاق الميد: المحاضرات 1 إلى 7", en:"Midterm scope: Lectures 1 to 7"},
   sections:[
    {k:"sum", files:[
@@ -164,7 +162,7 @@ const COURSES = [
     {f:"midterm-451.pdf", sol:"midterm-451-solutions.pdf", t:"Midterm 451", d:{ar:"تدريب · 30/10/2023", en:"Practice · 30/10/2023"}},
     {f:"midterm-442.pdf", sol:"midterm-442-solutions.pdf", t:"Midterm 442", d:{ar:"تدريب · 12/01/2023 · منهج قديم", en:"Practice · 12/01/2023 · older syllabus"}}]}
   ]},
- {id:"math317", code:"MATH317", quiz:"quiz.html?c=math317", ico:"num", date:"2026-11-11", time:"12:15", name:{ar:"الطرق العددية", en:"Numerical Methods"},
+ {id:"math317", code:"MATH317", quiz:"quiz.html?c=math317", ico:"1f9ee", date:"2026-11-11", time:"12:15", name:{ar:"الطرق العددية", en:"Numerical Methods"},
   scope:{ar:"نطاق الميد: المحاضرات 1 إلى 6", en:"Midterm scope: Lectures 1 to 6"},
   sections:[
    {k:"sum", files:[
@@ -185,8 +183,8 @@ const COURSES = [
     {f:"midterm-462.pdf", sol:"midterm-462-solutions.pdf", t:"Midterm 462", d:{ar:"تدريب · 18/03/2025", en:"Practice · 18/03/2025"}},
     {f:"midterm-461.pdf", sol:"midterm-461-solutions.pdf", t:"Midterm 461", d:{ar:"تدريب · 2024", en:"Practice · 2024"}}]}
   ]},
- {id:"cs342", code:"CS342", ico:"vis", date:"2026-11-08", time:"11:00", name:{ar:"البرمجة المرئية", en:"Visual Programming"}, sections:[]},
- {id:"cs383", code:"CS383", done:true, quiz:"quiz.html?c=cs383", ico:"se", date:"2026-10-27", time:"1:30", name:{ar:"هندسة البرمجيات", en:"Software Engineering"},
+ {id:"cs342", code:"CS342", ico:"1f5a5-fe0f", date:"2026-11-08", time:"11:00", name:{ar:"البرمجة المرئية", en:"Visual Programming"}, sections:[]},
+ {id:"cs383", code:"CS383", done:true, quiz:"quiz.html?c=cs383", ico:"1f9e9", date:"2026-10-27", time:"1:30", name:{ar:"هندسة البرمجيات", en:"Software Engineering"},
   scope:{ar:"نطاق الميد: المحاضرات 1 إلى 8", en:"Midterm scope: Lectures 1 to 8"},
   sections:[{k:"sum", files:[
     {f:"lecture-1-introduction-1.pdf", t:"Lecture 1 · Introduction (I)", d:{ar:"تعريفات، التكاليف، Application types", en:"Definitions, costs, application types"}},
@@ -207,7 +205,7 @@ const COURSES = [
     {f:"midterm-462.pdf", sol:"midterm-462-solutions.pdf", t:"Midterm 462", d:{ar:"تدريب · 20 درجة", en:"Practice · 20 marks"}},
     {f:"midterm-461.pdf", sol:"midterm-461-solutions.pdf", t:"Midterm 461", d:{ar:"تدريب · 13/10/2024 · 15 درجة", en:"Practice · 13/10/2024 · 15 marks"}},
     {f:"midterm-451.pdf", sol:"midterm-451-solutions.pdf", t:"Midterm 451", d:{ar:"تدريب · 20 درجة", en:"Practice · 20 marks"}}]}]},
- {id:"math329", code:"MATH329", done:true, quiz:"quiz.html?c=math329", ico:"or", date:"2026-10-29", time:"11:00", name:{ar:"بحوث العمليات", en:"Operations Research"},
+ {id:"math329", code:"MATH329", done:true, quiz:"quiz.html?c=math329", ico:"1f4c8", date:"2026-10-29", time:"11:00", name:{ar:"بحوث العمليات", en:"Operations Research"},
   scope:{ar:"نطاق الميد: المحاضرات 1 إلى 5 (لين Big-M)", en:"Midterm scope: Lectures 1 to 5 (up to Big-M)"},
   sections:[
    {k:"sum", files:[
@@ -260,7 +258,7 @@ function course(c){
   app.innerHTML = head(c)+'<div class="secs">'+
   ["sum","pra","exa"].map(k=>{ const s = c.sections.find(x=>x.k===k), n = s ? s.files.length : 0, tag = n ? 'a' : 'div';
     return '<'+tag+' class="sec s-'+k+(n?'':' off')+'"'+(n?' href="#'+c.id+'-'+k+'"':'')+'><span class="ico" aria-hidden="true">'+svg(SEC[k].ico)+'</span><span class="name">'+SEC[k][L]+'</span><span class="desc">'+SEC[k].d[L]+'</span><span class="pill'+(n?' on':'')+'">'+(n? t.files(n) : t.soon)+'</span></'+tag+'>'; }).join("")+
-  (c.quiz ? '<a class="sec s-quiz" href="'+c.quiz+'"><span class="ico" aria-hidden="true">'+svg("target")+'</span><span class="name">'+(L==="ar"?"كويز":"Quiz")+'</span><span class="desc">'+(L==="ar"?"اختيارات وصح وخطأ مع الشرح":"Multiple choice and true/false with explanations")+'</span><span class="pill on">'+(L==="ar"?"ابدأ":"Start")+'</span></a>' : '')+'</div>';
+  (c.quiz ? '<a class="sec s-quiz" href="'+c.quiz+'"><span class="ico" aria-hidden="true">'+svg("1f3af")+'</span><span class="name">'+(L==="ar"?"كويز":"Quiz")+'</span><span class="desc">'+(L==="ar"?"اختيارات وصح وخطأ مع الشرح":"Multiple choice and true/false with explanations")+'</span><span class="pill on">'+(L==="ar"?"ابدأ":"Start")+'</span></a>' : '')+'</div>';
 }
 function section(c, s){
   const t = T[L];
