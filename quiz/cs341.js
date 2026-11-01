@@ -1,8 +1,8 @@
 // CS341 quiz bank. k: mc = multiple choice (a = index of correct option), tf = true/false
-QUIZ={id:"cs341",code:"CS341",mids:["472","462","461"],topics:{in:"Introduction",c1:"Ch1 Graphics Systems",c2:"Ch2 Vector Tools",gl:"OpenGL Functions",ln:"Lines &amp; DDA"},
+QUIZ={id:"cs341",code:"CS341",mids:["472","462","461","451"],topics:{in:"Introduction",c1:"Ch1 Graphics Systems",c2:"Ch2 Vector Tools",gl:"OpenGL Functions",ln:"Lines &amp; DDA"},
 bank:[
 // ---------- Introduction ----------
-{id:"i1",t:"in",m:["472"],k:"mc",q:"What is computer graphics?",o:["Creating, storing, and manipulating models and images","Managing hardware components","Processing numerical calculations only","Controlling network communication"],a:0,e:"ميد 472 و461. التعريف حرفيًا: creation, storage, and manipulation of models and images."},
+{id:"i1",t:"in",m:["472","451"],k:"mc",q:"What is computer graphics?",o:["Creating, storing, and manipulating models and images","Managing hardware components","Processing numerical calculations only","Controlling network communication"],a:0,e:"ميد 472 و461. التعريف حرفيًا: creation, storage, and manipulation of models and images."},
 {id:"i2",t:"in",m:["472"],k:"mc",q:"Which of the following is NOT a main task for computer graphics?",o:["Modeling","Rendering","Animation","Data encryption"],a:3,e:"ميد 472. المهام الثلاث: Modeling و Rendering و Animation."},
 {id:"i3",t:"in",m:["472","461"],k:"mc",q:"One of the applications of computer graphics:",o:["Computer Aided Design (CAD)","Medical Visualization","Entertainment","All of the above"],a:3,e:"ميد 472 و461. الثلاثة كلها تطبيقات على السلايدات."},
 {id:"i4",t:"in",m:["462","461"],k:"tf",q:"Computer graphics applications are used only in the entertainment industry.",a:false,e:"ميد 462 و461. فيه CAD والطب والمحاكاة والتعليم وغيرها."},
@@ -66,8 +66,8 @@ bank:[
 {id:"v3",t:"c2",m:["472"],k:"tf",q:"The dot product of two perpendicular vectors is equal to zero.",a:true,e:"ميد 472. cos 90° = 0."},
 {id:"v4",t:"c2",m:["472"],k:"tf",q:"A unit vector has a length greater than 1.",a:false,e:"ميد 472. طوله 1 بالضبط."},
 {id:"v5",t:"c2",m:["472"],k:"mc",q:"The vector from point P to point Q is:",o:["v = Q − P","v = P − Q","v = P + Q","v = P × Q"],a:0,e:"ميد 472. النهاية ناقص البداية."},
-{id:"v6",t:"c2",k:"mc",q:"Point − Point gives:",o:["A vector","A point","A scalar","Not allowed"],a:0,e:"الفرق بين نقطتين متجه."},
-{id:"v7",t:"c2",k:"mc",q:"Point + Vector gives:",o:["A point","A vector","A scalar","Not allowed"],a:0,e:"P + v = Q نقطة."},
+{id:"v6",t:"c2",m:["451"],k:"mc",q:"Point − Point gives:",o:["A vector","A point","A scalar","Not allowed"],a:0,e:"الفرق بين نقطتين متجه."},
+{id:"v7",t:"c2",m:["451"],k:"mc",q:"Point + Vector gives:",o:["A point","A vector","A scalar","Not allowed"],a:0,e:"P + v = Q نقطة."},
 {id:"v8",t:"c2",k:"mc",q:"Point + Point gives:",o:["Not a valid point","A vector","A point","A scalar"],a:0,e:"غير مسموح لأن آخر إحداثي يصير 2."},
 {id:"v9",t:"c2",k:"mc",q:"In homogeneous form, the fourth coordinate of a vector is:",o:["0","1","2","−1"],a:0,e:"المتجه 0 والنقطة 1."},
 {id:"v10",t:"c2",k:"mc",q:"In homogeneous form, the fourth coordinate of a point is:",o:["1","0","2","−1"],a:0,e:"النقطة 1 والمتجه 0."},
@@ -130,6 +130,21 @@ bank:[
 {id:"g32",t:"gl",k:"mc",q:"GL_POINTS and GL_RGB are examples of:",o:["Symbolic constants","Data types","Function names","Libraries"],a:0,e:"الثوابت تبدأ بـ GL_، وأنواع البيانات مثل GLint و GLfloat."},
 {id:"g33",t:"gl",k:"tf",q:"Polygon vertices are usually specified in counterclockwise order.",a:true,e:"عكس عقارب الساعة."},
 {id:"g34",t:"gl",k:"tf",q:"glEnd takes the primitive type as its argument.",a:false,e:"glBegin هو اللي ياخذ النوع، و glEnd بدون arguments."},
+// ---------- Midterm 451 ----------
+{id:"w1",t:"c1",m:["451"],k:"mc",q:"In raster scan systems, the picture information is stored in:",o:["Display list","Refresh buffer","Vector file","None of all"],a:1,e:"ميد 451. الـ refresh (frame) buffer. والـ display list للـ Random."},
+{id:"w2",t:"c1",m:["451"],k:"mc",q:"Raster images are more commonly called:",o:["Pix map","Bitmap","Both 1 & 2","None of these"],a:1,e:"ميد 451. الـ frame buffer يسمى bit map."},
+{id:"w3",t:"c1",m:["451"],k:"mc",q:"The quality of the image depends on:",o:["Number of pixels used by the image","Number of lines used by the image","Number of photos used by the image","All the above"],a:0,e:"ميد 451. كل ما زادت البكسلات زادت الجودة."},
+{id:"w4",t:"c1",m:["451"],k:"mc",q:"The frequency at which a picture is redrawn on the screen is referred to as the:",o:["Beam-penetration","Shadow-mask","Resolution","Refresh rate"],a:3,e:"ميد 451. Refresh rate."},
+{id:"w5",t:"in",m:["451"],k:"mc",q:"One of the applications of computer graphics:",o:["Education & Training","Computer Art","Paint programs","All of above"],a:3,e:"ميد 451."},
+{id:"w6",t:"in",m:["451"],k:"mc",q:"The graphics can be:",o:["Drawing","Photograph, movies","Simulation","All of these"],a:3,e:"ميد 451."},
+{id:"w7",t:"c1",m:["451"],k:"mc",q:"Higher the number of pixels, ______ the image quality.",o:["Bad","Better","Smaller","None of above"],a:1,e:"ميد 451."},
+{id:"w8",t:"c1",m:["451"],k:"mc",q:"Each screen point is referred to as:",o:["Resolution","Pixel","Persistence","Dot pitch"],a:1,e:"ميد 451. نقطة الشاشة = pixel (picture element)."},
+{id:"w9",t:"c1",m:["451"],k:"mc",q:"Rays emitted by cathode ray tube are:",o:["Light","Radiations","Signals","Electrons"],a:3,e:"ميد 451. electrons، والضوء يطلع لما تضرب الـ phosphor."},
+{id:"w10",t:"c1",m:["451"],k:"mc",q:"Active-matrix display included:",o:["Two plates of glass","Each pixel on the screen is controlled by its own transistor","A transistor controls a whole row or column of pixels","The screen needs less power"],a:1,e:"ميد 451. c هو الـ passive-matrix."},
+{id:"w11",t:"c2",m:["451"],k:"mc",q:"Vector + Vector =",o:["Vector","Point","Scalar","Not allowed"],a:0,e:"ميد 451."},
+{id:"w12",t:"c2",m:["451"],k:"mc",q:"Scalar * Vector =",o:["Vector","Point","Scalar","Not allowed"],a:0,e:"ميد 451."},
+{id:"w13",t:"c2",m:["451"],k:"mc",q:"Scalar * Vector + Scalar * Vector =",o:["Vector","Point","Scalar","Not allowed"],a:0,e:"ميد 451."},
+{id:"w14",t:"c1",m:["451"],k:"mc",q:"Emissive displays:",o:["Convert electrical energy into light","Use optical effects on outside light","Store the picture in a display list","Need a backlight to show colors"],a:0,e:"ميد 451. Emissive: Plasma و LED. Nonemissive: LCD."},
 // ---------- Lines & DDA ----------
 {id:"d1",t:"ln",m:["472","461"],k:"mc",q:"Absolute coordinates are:",o:["Actual positions measured from the origin","An offset from the current position","Pixel positions on the screen only","Coordinates with a fourth value of 1"],a:0,e:"ميد 472 و461. Relative = إزاحة من آخر موقع."},
 {id:"d2",t:"ln",m:["472","461"],k:"mc",q:"Relative coordinates are:",o:["An offset from the last referenced position","Actual positions measured from the origin","Pixel positions on the screen only","Coordinates with a fourth value of 0"],a:0,e:"ميد 472 و461. Absolute = الموقع الفعلي من الأصل."},
