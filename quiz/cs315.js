@@ -1,5 +1,5 @@
 // CS315 quiz bank. k: mc = multiple choice (a = index of correct option), tf = true/false
-QUIZ={id:"cs315",code:"CS315",topics:{l1:"L1 Analysis",l2:"L2 Divide &amp; Conquer",l3:"L3 Hashing",l4:"L4 Dynamic Programming",l5:"L5 Greedy",l6:"L6–7 B-Trees"},
+QUIZ={id:"cs315",code:"CS315",topics:{l1:"L1 Analysis",l2:"L2 Divide &amp; Conquer",l3:"L3 Hashing",l4:"L4 Dynamic Programming",l5:"L5 Greedy"},
 bank:[
 {id:"a1",t:"l1",k:"tf",q:"In order to compare two algorithms, the same hardware and software environments must be used without any consideration of inputs type and its size.",a:false,e:"ميد 472 و 442. لازم نفس البيئة ونفس المدخلات بعد."},
 {id:"a2",t:"l1",k:"tf",q:"Theoretical analysis allows us to evaluate the speed of an algorithm independent of the hardware/software environment.",a:true,e:"ميد 472 و 442. نص السلايد."},
@@ -82,19 +82,6 @@ bank:[
 {id:"e12",t:"l5",k:"mc",q:"20 letters in ASCII take:",o:["160 bits","20 bits","80 bits","45 bits"],a:0,e:"20 × 8. مثال السلايد بـ Huffman أخذ 45."},
 {id:"e13",t:"l5",k:"tf",q:"In any problem there can be many optimal solutions but there is only one feasible solution.",a:false,e:"ميد 461. العكس: فيه حلول feasible كثيرة، والـ optimal أفضلها."},
 
-{id:"f1",t:"l6",k:"mc",q:"Minimum degree t = 3: the maximum number of keys in a node is:",o:["5","3","6","2"],a:0,e:"2t − 1."},
-{id:"f2",t:"l6",k:"mc",q:"Minimum degree t = 3: the minimum keys in a non-root node is:",o:["2","1","3","5"],a:0,e:"t − 1."},
-{id:"f3",t:"l6",k:"mc",q:"A B-tree with t = 2 is also called:",o:["2-3-4 tree","binary tree","AVL tree","heap"],a:0,e:"1 إلى 3 مفاتيح، و 2 إلى 4 أبناء."},
-{id:"f4",t:"l6",k:"mc",q:"A node with n keys has how many children?",o:["n + 1","n","2n","n − 1"],a:0,e:"كل مفتاح بين ابنين."},
-{id:"f5",t:"l6",k:"tf",q:"All leaves of a B-tree are at the same depth.",a:true,e:"B-tree دايماً متوازنة."},
-{id:"f6",t:"l6",k:"tf",q:"A new key in a B-tree is always inserted into a leaf.",a:true,e:"ما ننشئ ورقة جديدة، نضيف في ورقة موجودة."},
-{id:"f7",t:"l6",k:"mc",q:"When a full node splits:",o:["the median moves up to the parent","the smallest key moves up","the node is deleted","all keys move down"],a:0,e:"والباقي يصير عقدتين."},
-{id:"f8",t:"l6",k:"mc",q:"The height of a B-tree increases when:",o:["the root splits","a leaf splits","a key is deleted","a key is searched"],a:0,e:"الشجرة تكبر من فوق."},
-{id:"f9",t:"l6",k:"mc",q:"In the midterm, \"B-tree of order 5\" means at most how many keys per node?",o:["4","5","9","2"],a:0,e:"order = أكثر عدد أبناء m، فالمفاتيح m − 1."},
-{id:"f10",t:"l6",k:"mc",q:"In the midterm, \"B-tree of degree 3\" means at most how many keys per node?",o:["2","3","5","1"],a:0,e:"ميد 462. 3 أبناء، فمفتاحين (2-3 tree)."},
-{id:"f11",t:"l6",k:"mc",q:"Delete case 1: the key is in a leaf with ≥ t keys. We:",o:["just delete it","merge with a sibling","borrow from a sibling","split the leaf"],a:0,e:"ما فيه خطر إن العقدة تنزل تحت الحد."},
-{id:"f12",t:"l6",k:"mc",q:"Delete case 3a: the child has t − 1 keys and a sibling has ≥ t. We:",o:["borrow through the parent","merge them","delete the parent","split the child"],a:0,e:"مفتاح ينزل من الأب، ومفتاح من الأخ يطلع مكانه. أما 3b فهو merge."},
-{id:"f13",t:"l6",k:"mc",q:"B-trees are designed mainly for:",o:["disks (secondary storage)","CPU registers","cache only","sorting arrays"],a:0,e:"عشان نقلل عدد مرات القراءة من القرص."}
 ]};
 QUIZ.ee={
 a1:"Midterms 472 and 442. The same environment and the same inputs must be used.",a2:"Midterms 472 and 442. The words of the slide.",a3:"Midterm 461. The definition: a step-by-step procedure in a finite amount of time.",a4:"Midterm 461. The words of the slide.",a5:"Midterm 442. We count the maximum number of operations, which is the worst case.",
