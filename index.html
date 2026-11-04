@@ -126,27 +126,6 @@ const SEC = {
  exa:{ico:"file", ar:"الميدات السابقة", en:"Past midterms", d:{ar:"ميدات للتدريب، وتحليل وش يتكرر", en:"Midterms to practice on, and what repeats"}}
 };
 const COURSES = [
- {id:"cs315", code:"CS315", quiz:"quiz.html?c=cs315", ico:"alg", date:"2026-11-04", time:"11:00", name:{ar:"تحليل وتصميم الخوارزميات", en:"Algorithms Analysis & Design"},
-  scope:{ar:"نطاق الميد: المحاضرات 1 إلى 5", en:"Midterm scope: Lectures 1 to 5"},
-  sections:[
-   {k:"sum", files:[
-    {f:"lecture-1-analysis-of-algorithms.pdf", t:"Lecture 1 · Analysis of Algorithms", d:{ar:"Primitive operations، Big-Oh، Prefix averages", en:"Primitive operations, Big-Oh, prefix averages"}},
-    {f:"lecture-2-divide-and-conquer.pdf", t:"Lecture 2 · Divide-and-Conquer", d:{ar:"Insertion sort، Merge sort، Recursion tree", en:"Insertion sort, merge sort, recursion tree"}},
-    {f:"lecture-3-dictionaries-hash-tables.pdf", t:"Lecture 3 · Dictionaries & Hash Tables", d:{ar:"Chaining، Linear probing، Double hashing", en:"Chaining, linear probing, double hashing"}},
-    {f:"lecture-4-dynamic-programming.pdf", t:"Lecture 4 · Dynamic Programming", d:{ar:"Matrix chain، LCS، Fibonacci", en:"Matrix chain, LCS, Fibonacci"}},
-    {f:"lecture-5-greedy-algorithms.pdf", t:"Lecture 5 · Greedy Algorithms", d:{ar:"Activity selection، Knapsack، Huffman", en:"Activity selection, knapsack, Huffman"}},
-    {f:"theory-review.pdf", t:"Theory Review", d:{ar:"النظري كله: صح وخطأ الميدات وتعريفات", en:"All theory: midterm true/false and definitions"}}]},
-   {k:"pra", files:[
-    {f:"final-drill.pdf", sol:"final-drill-solutions.pdf", t:"Final Drill · L1–L5", d:{ar:"تدريب مجمّع: 8 أسئلة تغطي كل المسائل من L1 إلى L5", en:"One combined drill: 8 questions covering every problem type in L1–L5"}},
-    {f:"mock-midterm.pdf", sol:"mock-midterm-solutions.pdf", t:"Mock Midterm", d:{ar:"اختبار تجريبي على Lecture 1 إلى 3", en:"A practice exam on Lectures 1 to 3"}}]},
-   {k:"exa", files:[
-    {f:"what-repeats.pdf", t:{ar:"وش يتكرر في الميد", en:"What repeats in the midterm"}, d:{ar:"تحليل خمس ميدات", en:"Analysis of five midterms"}},
-    {f:"midterm-472.pdf", sol:"midterm-472-solutions.pdf", t:"Midterm 472", d:{ar:"تدريب · من L1 إلى L5", en:"Practice · from L1 to L5"}},
-    {f:"midterm-462.pdf", sol:"midterm-462-solutions.pdf", t:"Midterm 462", d:{ar:"تدريب · 25 درجة", en:"Practice · 25 marks"}},
-    {f:"midterm-461.pdf", sol:"midterm-461-solutions.pdf", t:"Midterm 461", d:{ar:"تدريب · 25 درجة", en:"Practice · 25 marks"}},
-    {f:"midterm-451.pdf", sol:"midterm-451-solutions.pdf", t:"Midterm 451", d:{ar:"تدريب · 30/10/2023", en:"Practice · 30/10/2023"}},
-    {f:"midterm-442.pdf", sol:"midterm-442-solutions.pdf", t:"Midterm 442", d:{ar:"تدريب · 12/01/2023 · منهج قديم", en:"Practice · 12/01/2023 · older syllabus"}}]}
-  ]},
  {id:"cs342", code:"CS342", ico:"vis", date:"2026-11-08", time:"11:00", name:{ar:"البرمجة المرئية", en:"Visual Programming"},
   scope:{ar:"نطاق الميد: Chapter 1 و Chapter 2 لين سلايد 53", en:"Midterm scope: Chapter 1 and Chapter 2 up to slide 53"},
   sections:[
@@ -179,6 +158,27 @@ const COURSES = [
     {f:"midterm-471.pdf", sol:"midterm-471-solutions.pdf", t:"Midterm 471", d:{ar:"تدريب · 20/10/2025", en:"Practice · 20/10/2025"}},
     {f:"midterm-462.pdf", sol:"midterm-462-solutions.pdf", t:"Midterm 462", d:{ar:"تدريب · 18/03/2025", en:"Practice · 18/03/2025"}},
     {f:"midterm-461.pdf", sol:"midterm-461-solutions.pdf", t:"Midterm 461", d:{ar:"تدريب · 2024", en:"Practice · 2024"}}]}
+  ]},
+ {id:"cs315", code:"CS315", done:true, quiz:"quiz.html?c=cs315", ico:"alg", date:"2026-11-04", time:"11:00", name:{ar:"تحليل وتصميم الخوارزميات", en:"Algorithms Analysis & Design"},
+  scope:{ar:"نطاق الميد: المحاضرات 1 إلى 5", en:"Midterm scope: Lectures 1 to 5"},
+  sections:[
+   {k:"sum", files:[
+    {f:"lecture-1-analysis-of-algorithms.pdf", t:"Lecture 1 · Analysis of Algorithms", d:{ar:"Primitive operations، Big-Oh، Prefix averages", en:"Primitive operations, Big-Oh, prefix averages"}},
+    {f:"lecture-2-divide-and-conquer.pdf", t:"Lecture 2 · Divide-and-Conquer", d:{ar:"Insertion sort، Merge sort، Recursion tree", en:"Insertion sort, merge sort, recursion tree"}},
+    {f:"lecture-3-dictionaries-hash-tables.pdf", t:"Lecture 3 · Dictionaries & Hash Tables", d:{ar:"Chaining، Linear probing، Double hashing", en:"Chaining, linear probing, double hashing"}},
+    {f:"lecture-4-dynamic-programming.pdf", t:"Lecture 4 · Dynamic Programming", d:{ar:"Matrix chain، LCS، Fibonacci", en:"Matrix chain, LCS, Fibonacci"}},
+    {f:"lecture-5-greedy-algorithms.pdf", t:"Lecture 5 · Greedy Algorithms", d:{ar:"Activity selection، Knapsack، Huffman", en:"Activity selection, knapsack, Huffman"}},
+    {f:"theory-review.pdf", t:"Theory Review", d:{ar:"النظري كله: صح وخطأ الميدات وتعريفات", en:"All theory: midterm true/false and definitions"}}]},
+   {k:"pra", files:[
+    {f:"final-drill.pdf", sol:"final-drill-solutions.pdf", t:"Final Drill · L1–L5", d:{ar:"تدريب مجمّع: 8 أسئلة تغطي كل المسائل من L1 إلى L5", en:"One combined drill: 8 questions covering every problem type in L1–L5"}},
+    {f:"mock-midterm.pdf", sol:"mock-midterm-solutions.pdf", t:"Mock Midterm", d:{ar:"اختبار تجريبي على Lecture 1 إلى 3", en:"A practice exam on Lectures 1 to 3"}}]},
+   {k:"exa", files:[
+    {f:"what-repeats.pdf", t:{ar:"وش يتكرر في الميد", en:"What repeats in the midterm"}, d:{ar:"تحليل خمس ميدات", en:"Analysis of five midterms"}},
+    {f:"midterm-472.pdf", sol:"midterm-472-solutions.pdf", t:"Midterm 472", d:{ar:"تدريب · من L1 إلى L5", en:"Practice · from L1 to L5"}},
+    {f:"midterm-462.pdf", sol:"midterm-462-solutions.pdf", t:"Midterm 462", d:{ar:"تدريب · 25 درجة", en:"Practice · 25 marks"}},
+    {f:"midterm-461.pdf", sol:"midterm-461-solutions.pdf", t:"Midterm 461", d:{ar:"تدريب · 25 درجة", en:"Practice · 25 marks"}},
+    {f:"midterm-451.pdf", sol:"midterm-451-solutions.pdf", t:"Midterm 451", d:{ar:"تدريب · 30/10/2023", en:"Practice · 30/10/2023"}},
+    {f:"midterm-442.pdf", sol:"midterm-442-solutions.pdf", t:"Midterm 442", d:{ar:"تدريب · 12/01/2023 · منهج قديم", en:"Practice · 12/01/2023 · older syllabus"}}]}
   ]},
  {id:"cs341", code:"CS341", done:true, quiz:"quiz.html?c=cs341", ico:"cg", date:"2026-11-02", time:"12:15", name:{ar:"الرسم بالحاسب", en:"Computer Graphics"},
   scope:{ar:"نطاق الميد: Introduction، Chapter 1، Chapter 2، Output Primitives لين DDA", en:"Midterm scope: Introduction, Chapter 1, Chapter 2, Output Primitives up to DDA"},
@@ -261,7 +261,7 @@ function home(){
   (up? '<div class="next"><div class="big">'+days(up.date)+'</div><div class="t"><b>'+t.days+': '+up.name[L]+'</b><span>'+dm(up.date)+' · '+t.at+' '+up.time+'</span></div>'+(count(up)?'<a href="#'+up.id+'">'+t.open+'</a>':'')+'</div>' : '')+
   '<div class="strip">'+t.courses+'</div><div class="grid">'+
   COURSES.map(c=>{ const n=count(c), tag=n?'a':'div';
-    return '<'+tag+' class="course'+(n&&!c.done?'':' off')+'"'+(n?' href="#'+c.id+'"':'')+'><div class="row"><span class="n">'+c.code+'</span></div>'+wm(c.ico)+'<div class="name">'+c.name[L]+'</div><div class="meta">'+(c.post? t.exam+' '+t.post : t.exam+' '+dm(c.date)+' · '+t.left(days(c.date)))+'</div><span class="pill'+(n?' on':'')+'">'+(n? t.ready(n):t.soon)+'</span></'+tag+'>'; }).join("")+'</div>';
+    return '<'+tag+' class="course'+(n&&!c.done?'':' off')+'"'+(n?' href="#'+c.id+'"':'')+'><div class="row"><span class="n">'+c.code+'</span></div>'+wm(c.ico)+'<div class="name">'+c.name[L]+'</div><div class="meta">'+(c.post? t.exam+' '+t.post : t.exam+' '+dm(c.date)+' · '+t.left(c.done?-1:days(c.date)))+'</div><span class="pill'+(n?' on':'')+'">'+(n? t.ready(n):t.soon)+'</span></'+tag+'>'; }).join("")+'</div>';
 }
 function head(c){
   const t = T[L];
