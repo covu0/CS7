@@ -230,7 +230,7 @@ $("again").onclick=()=>{$("done").hidden=true;$("setup").hidden=false;drawSetup(
 function applyLang(){
   document.documentElement.lang=L;document.documentElement.dir=L==="ar"?"rtl":"ltr";
   document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.l===L));
-  document.querySelectorAll("[data-t]").forEach(el=>{const v=S[L][el.dataset.t];if(typeof v==="string")el.textContent=v});
+  document.querySelectorAll("[data-t]").forEach(el=>{const v=S[L][el.dataset.t];if(typeof v==="string")el.textContent=v});if(typeof QUIZ!=="undefined"&&QUIZ.sub){const el=document.querySelector('[data-t="sub"]');if(el)el.textContent=QUIZ.sub[L]}
   if(!QUIZ)return;
   document.title=t("quiz")+" "+QUIZ.code+" · محارب";
   const bk=$("back");bk.href="./#"+QUIZ.id;bk.textContent=(L==="ar"?"→ ":"← ")+QUIZ.code;
@@ -245,7 +245,7 @@ function boot(){
   $("hcode").textContent=QUIZ.code;
   applyLang();drawSetup();
 }
-const ds=document.createElement("script");ds.src="quiz/"+CID+".js?v=6";ds.onload=boot;ds.onerror=boot;document.body.append(ds);
+const ds=document.createElement("script");ds.src="quiz/"+CID+".js?v=7";ds.onload=boot;ds.onerror=boot;document.body.append(ds);
 </script>
 </body>
 </html>
