@@ -56,7 +56,17 @@ QUIZ={id:"math317",code:"MATH317",sub:{ar:"صح وخطأ بس، مثل نظري 
 {id:"n4",t:"new",k:"tf",q:"Newton's method needs the derivative of the function.",a:true,e:"القانون فيه f′."},
 {id:"n5",t:"new",k:"tf",q:"For f(x) = x² − 2 and x₀ = 1, Newton gives x₁ = 1.5.",a:true,e:`f(x) = x² − 2 → f(1) = −1<br>f′(x) = 2x → f′(1) = 2<br>${M("x₁ = 1 − (−1) ÷ 2 = 1.5")}`},
 {id:"n7",t:"new",k:"tf",q:"Newton's formula comes from the chord between two points.",a:false,e:"الصح: من جذر خط المماس (tangent). جذر خط المماس، أو أول حدين من Taylor."},
-{id:"n8",t:"new",k:"tf",q:"Newton's iteration should stop when |εₐ| is below the tolerance or n exceeds n_max.",a:true,e:"الخطأ التقريبي أقل من المسموح، أو نتعدى عدد التكرارات."}
+{id:"n8",t:"new",k:"tf",q:"Newton's iteration should stop when |εₐ| is below the tolerance or n exceeds n_max.",a:true,e:"الخطأ التقريبي أقل من المسموح، أو نتعدى عدد التكرارات."},
+{id:"c14",t:"ch1",k:"tf",q:"Chopping 0.475 to two digits gives 0.48.",a:false,e:"Chopping يحذف بدون تعديل فيعطي 0.47. و 0.48 هي Rounding."},
+{id:"c15",t:"ch1",k:"tf",q:"Errors are measured to decide when an iterative method should stop.",a:true,e:"نقيس الخطأ عشان نعرف الدقة، ونعرف متى نوقف (stopping criteria)."},
+{id:"t15",t:"tay",k:"tf",q:"The Taylor series of ln(1 + x) represents the function only for −1 < x ≤ 1.",a:true,e:"تمثل الدالة لـ −1 < x ≤ 1 بس. أما eˣ فلكل x."},
+{id:"f14",t:"flo",k:"tf",q:"Underflow happens when a number is too large to store.",a:false,e:"هذا Overflow. الـ Underflow لما الرقم أقرب للصفر من أصغر رقم يقدر يخزنه."},
+{id:"f15",t:"flo",k:"tf",q:"Double precision uses an exponent bias of 1023.",a:true,e:"Double: bias 1023. و Single: bias 127."},
+{id:"f16",t:"flo",k:"tf",q:"The unit roundoff in single precision is 2⁻²⁴.",a:true,e:"Single: 2⁻²⁴، و Double: 2⁻⁵³. وهي نص الـ machine epsilon."},
+{id:"f17",t:"flo",k:"tf",q:"Most real numbers are machine numbers.",a:false,e:"الـ machine numbers عددها محدود، وأغلب الأرقام الحقيقية مو منها، مثل 0.1."},
+{id:"b9",t:"bis",k:"tf",q:"The error in the Bisection method after n steps is at most (b − a) divided by 2ⁿ.",a:false,e:"ميد 472. الصح 2ⁿ⁺¹، لأن c في نص الفترة."},
+{id:"b10",t:"bis",k:"tf",q:"If f is continuous and f(a)·f(b) < 0, there is at least one root between a and b.",a:true,e:"Intermediate Value Theorem: تغير الإشارة يضمن جذر واحد على الأقل."},
+{id:"n9",t:"new",k:"tf",q:"Newton's method is also called the Newton-Raphson method.",a:true,e:"نفس الطريقة، اسمها الثاني Newton-Raphson."}
 ]};
 QUIZ.ee={
 c1:"Zeros before the first nonzero digit do not count. That leaves 4050: four digits (the trailing zero after the decimal point counts).",
@@ -109,5 +119,15 @@ n3:"x₀ must be close to the root.",
 n4:"The formula contains f′.",
 n5:`f(x) = x² − 2 → f(1) = −1<br>f′(x) = 2x → f′(1) = 2<br>${M("x₁ = 1 − (−1) ÷ 2 = 1.5")}`,
 n7:"The root of the tangent line, or the first two Taylor terms.",
-n8:"The approximate error is below the tolerance, or the number of iterations exceeds the limit."
+n8:"The approximate error is below the tolerance, or the number of iterations exceeds the limit.",
+c14:"Chopping drops digits without adjusting, giving 0.47. 0.48 is rounding.",
+c15:"Errors judge accuracy and give the stopping criteria.",
+t15:"Only for −1 < x ≤ 1. The series for eˣ works for every x.",
+f14:"That is overflow. Underflow is a number closer to zero than the smallest storable one.",
+f15:"Double: 1023. Single: 127.",
+f16:"Single 2⁻²⁴, double 2⁻⁵³: half of machine epsilon.",
+f17:"Machine numbers are finite; most real numbers, like 0.1, are not among them.",
+b9:"Midterm 472. It is 2ⁿ⁺¹, because c is the midpoint.",
+b10:"Intermediate Value Theorem: a sign change guarantees at least one root.",
+n9:"Same method, second name."
 };
